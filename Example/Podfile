@@ -1,0 +1,12 @@
+use_frameworks!
+
+target 'BSGMetrics_Example' do
+  pod 'BSGMetrics', :path => '../'
+
+  target 'BSGMetrics_Tests' do
+    inherit! :search_paths
+
+    pod 'Specta'
+  pod 'Expecta'
+  end
+end
