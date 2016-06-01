@@ -8,6 +8,10 @@
 
 @import UIKit;
 
-@interface BSGViewController : UIViewController
+@interface BSGViewController : UITableViewController
+
+- (IBAction)addEvent:(id)sender;
+- (IBAction)reload;
+- (IBAction)startSending:(id)sender;
 
 @end

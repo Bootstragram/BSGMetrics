@@ -1,0 +1,6 @@
+framework module FCModel {
+  umbrella header "FCModel-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -2,11 +2,12 @@ use_frameworks!
 
 target 'BSGMetrics_Example' do
   pod 'BSGMetrics', :path => '../'
+  pod 'BSGUtilities', :git => 'https://github.com/Bootstragram/BSGUtilities.git'
 
   target 'BSGMetrics_Tests' do
     inherit! :search_paths
 
     pod 'Specta'
-  pod 'Expecta'
+    pod 'Expecta'
   end
 end

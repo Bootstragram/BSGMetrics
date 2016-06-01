@@ -1,0 +1,6 @@
+framework module BSGMetrics {
+  umbrella header "BSGMetrics-umbrella.h"
+
+  export *
+  module * { export * }
+}

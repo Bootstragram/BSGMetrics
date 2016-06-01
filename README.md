@@ -1,6 +1,6 @@
 # BSGMetrics
 
-[![CI Status](http://img.shields.io/travis/Mickaël Floc’hlay/BSGMetrics.svg?style=flat)](https://travis-ci.org/Mickaël Floc’hlay/BSGMetrics)
+[![CI Status](http://img.shields.io/travis/Bootstragram/BSGMetrics.svg?style=flat)](https://travis-ci.org/Bootstragram/BSGMetrics)
 [![Version](https://img.shields.io/cocoapods/v/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
 [![License](https://img.shields.io/cocoapods/l/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
 [![Platform](https://img.shields.io/cocoapods/p/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
@@ -22,7 +22,7 @@ pod "BSGMetrics"
 
 ## Author
 
-Mickaël Floc’hlay, mickael@flochlay.com
+Bootstragram, contact@bootstragram.com
 
 ## License
 

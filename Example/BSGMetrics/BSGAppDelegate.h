@@ -7,9 +7,13 @@
 //
 
 @import UIKit;
+#import "BSGMetrics.h"
 
 @interface BSGAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) BSGMetrics *metrics;
+
+- (void)startSendingMetrics;
 
 @end

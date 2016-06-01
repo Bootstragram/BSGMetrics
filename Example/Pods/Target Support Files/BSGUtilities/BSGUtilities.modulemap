@@ -1,0 +1,6 @@
+framework module BSGUtilities {
+  umbrella header "BSGUtilities-umbrella.h"
+
+  export *
+  module * { export * }
+}
