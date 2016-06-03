@@ -9,11 +9,14 @@
 #import "BSGViewController.h"
 #import "BSGArrayDataSource.h"
 #import "BSGMetrics.h"
+#import "BSGAppDelegate.h"
+
 
 @interface BSGViewController ()
 
-@property BSGArrayDataSource *dataSource;
-@property NSDateFormatter *dateFormatter;
+@property(strong) BSGArrayDataSource *dataSource;
+@property(strong) NSDateFormatter *dateFormatter;
+@property(weak) BSGAppDelegate *appDelegate;
 
 @end
 
@@ -29,9 +32,11 @@
     UIBarButtonItem *trashButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(purge)];
     UIBarButtonItem *retryButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(redo)];
 
-    toolbar.items = @[ startButtonItem, reloadButtonItem, trashButtonItem, retryButtonItem ];
+    toolbar.items = @[ startButtonItem, retryButtonItem, trashButtonItem, reloadButtonItem ];
 
     self.tableView.tableHeaderView = toolbar;
+
+    self.appDelegate = [[UIApplication sharedApplication] delegate];
 
     [self reload];
 }
@@ -73,15 +78,20 @@
 
 
 - (IBAction)startSending:(id)sender {
-    [[UIApplication sharedApplication].delegate performSelector:@selector(startSendingMetrics)];
+    [_appDelegate.metrics startSendingWithCompletion:^(BOOL success) {
+        [self reload];
+    }];
 }
 
 - (void)purge {
-    [[UIApplication sharedApplication].delegate performSelector:@selector(pruneMetrics)];
+    [_appDelegate.metrics prune];
+    [self reload];
 }
 
 - (void)redo {
-    [[UIApplication sharedApplication].delegate performSelector:@selector(redoMetrics)];
+    [_appDelegate.metrics redoWithCompletion:^(BOOL success) {
+        [self reload];
+    }];
 }
 
 @end

@@ -32,7 +32,9 @@
                    @"    id           INTEGER PRIMARY KEY,"
                    @"    status       INTEGER NOT NULL DEFAULT 0,"
                    @"    userInfo     BLOB NOT NULL,"
-                   @"    createdAt    REAL NOT NULL"
+                   @"    createdAt    REAL NOT NULL,"
+                   @"    version      TEXT NOT NULL,"
+                   @"    retryCount   INTEGER NOT NULL DEFAULT 0"
                    @");"
                    ]) failedAt(1);
 
@@ -63,7 +65,7 @@
     BSGMetrics *metrics = [[BSGMetrics alloc] init];
 
     BSGMetricsConfiguration *configuration = [[BSGMetricsConfiguration alloc] init];
-    configuration.baseURL = [NSURL URLWithString:@"http://localhost:4567"];
+    configuration.baseURL = [NSURL URLWithString:@"http://192.168.42.70:4567"];
     configuration.limit = 10;
     configuration.frequency = 15;
     metrics.configuration = configuration;
@@ -75,19 +77,28 @@
 }
 
 
-- (void)startSending {
-    [_service postEventsWithStatus:BSGEventStatusCreated limit:_configuration.frequency];
+- (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
+    [_service postEventsWithStatus:BSGMetricsEventStatusCreated limit:_configuration.frequency completion:callback];
 }
 
+- (void)startSending {
+    [self startSendingWithCompletion:^(BOOL success) {
+        // Do nothing
+    }];
+}
 
 - (void)prune {
-    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ?", [NSNumber numberWithInteger:BSGEventStatusSentWithSuccess]];
+    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithSuccess]];
 }
 
+- (void)redoWithCompletion:(void (^)(BOOL success))callback {
+    [_service postEventsWithStatus:BSGMetricsEventStatusSentWithError limit:_configuration.frequency completion:callback];
+}
 
 - (void)redo {
-    [_service postEventsWithStatus:BSGEventStatusSentWithError limit:_configuration.frequency];
+    [self redoWithCompletion:^(BOOL success) {
+        // Do nothing
+    }];
 }
-
 
 @end

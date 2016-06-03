@@ -9,13 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "FCModel.h"
 
-typedef NS_ENUM(NSInteger, BSGEventStatus) {
-    /**
-     *  Team 1 won.
-     */
-    BSGEventStatusCreated = 1,
-    BSGEventStatusSentWithSuccess = 2,
-    BSGEventStatusSentWithError = 3
+typedef NS_ENUM(NSInteger, BSGMetricsEventStatus) {
+    BSGMetricsEventStatusCreated = 1,
+    BSGMetricsEventStatusSentWithSuccess = 2,
+    BSGMetricsEventStatusSentWithError = 3
 };
 
 @interface BSGMetricsEvent : FCModel
@@ -23,7 +20,10 @@ typedef NS_ENUM(NSInteger, BSGEventStatus) {
 @property(nonatomic) int64_t id;
 @property(strong, nonatomic) NSDictionary *userInfo;
 @property(strong, nonatomic) NSDate *createdAt;
-@property(nonatomic) BSGEventStatus status;
+@property(nonatomic) BSGMetricsEventStatus status;
+@property(nonatomic) NSString *version;
+@property(nonatomic) NSInteger retryCount;
+
 
 - (instancetype)init NS_UNAVAILABLE;
 

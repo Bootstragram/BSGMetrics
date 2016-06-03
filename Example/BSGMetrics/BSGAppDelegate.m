@@ -45,19 +45,4 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)startSendingMetrics {
-    [_metrics startSending];
-}
-
-
-- (void)pruneMetrics {
-    [_metrics prune];
-}
-
-
-- (void)redoMetrics {
-    [_metrics redo];
-}
-
-
 @end

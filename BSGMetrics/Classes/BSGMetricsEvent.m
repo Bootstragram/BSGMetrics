@@ -13,7 +13,9 @@
 - (void)setValuesWithUserInfo:(NSDictionary *)userInfo {
     _userInfo = userInfo;
     _createdAt = [NSDate date];
-    _status = BSGEventStatusCreated;
+    _status = BSGMetricsEventStatusCreated;
+    _retryCount = 0;
+    _version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
 + (BOOL)eventWithUserInfo:(NSDictionary *)userInfo {

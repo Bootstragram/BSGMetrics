@@ -19,8 +19,12 @@
 
 + (BSGMetrics *)open;
 
+- (void)startSendingWithCompletion:(void (^)(BOOL success))callback;
 - (void)startSending;
-- (void)prune;
+
+- (void)redoWithCompletion:(void (^)(BOOL success))callback;
 - (void)redo;
+
+- (void)prune;
 
 @end
