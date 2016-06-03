@@ -44,7 +44,7 @@
 
         [objectsToSend addObject:@{
                                    @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
-                                   @"user": @"43B9E464-EDE1-48E9-9430-66507D3B1534",
+                                   @"user": [UIDevice currentDevice].identifierForVendor.UUIDString,
                                    @"app": @{
                                            @"version": event.version,
                                            @"bundleID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
