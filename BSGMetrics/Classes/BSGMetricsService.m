@@ -48,19 +48,19 @@
     } else {
         NSMutableArray *activities = [NSMutableArray arrayWithCapacity:events.count];
 
-        [activities enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [events enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
 
             [activities addObject:@{
                                     @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
-                                    @"version": event.version,
+                                    @"appVersion": event.version,
                                     @"info": event.userInfo
                                     }];
         }];
 
         [_manager POST:_configuration.path
             parameters:@{
-                         @"user": [UIDevice currentDevice].identifierForVendor.UUIDString,
+                         @"userID": [UIDevice currentDevice].identifierForVendor.UUIDString,
                          @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
                          @"activities": activities
                          }
@@ -155,7 +155,7 @@
             NSLog(@"Error: unexpected status code %li", statusCode);
         }
     }
-    
+
     [self updateEvents:events withErrorStatus:BSGMetricsEventStatusSentWithError];
 }
 
