@@ -15,7 +15,7 @@
     _createdAt = [NSDate date];
     _status = BSGMetricsEventStatusCreated;
     _retryCount = 0;
-    _version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    _version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
 
