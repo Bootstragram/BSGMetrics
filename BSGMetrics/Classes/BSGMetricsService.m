@@ -23,53 +23,62 @@
 - (instancetype)initWithConfig:(BSGMetricsConfiguration *)configuration {
     self = [super init];
     if (self) {
-        _manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[configuration baseURL]];
+        _configuration = configuration;
+
+        _manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:_configuration.baseURL]];
         _manager.requestSerializer = [AFJSONRequestSerializer serializer];
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
-
     }
     return self;
 }
 
 
-- (void)postEventsWithStatus:(BSGMetricsEventStatus)status limit:(NSInteger)limit completion:(void (^)(BOOL success))callback {
-    NSArray *events = [BSGMetricsEvent instancesWhere:@"status = ? ORDER BY createdAt LIMIT ?", [NSNumber numberWithInteger:status], [NSNumber numberWithInteger:limit]];
+- (void)postEventsWithLimit:(NSInteger)limit completion:(void (^)(BOOL success))callback {
+    NSArray *events = [BSGMetricsEvent instancesWhere:@"(status = ?) OR (status = ? AND retryCount < ?) ORDER BY createdAt LIMIT ?",
+                       [NSNumber numberWithInteger:BSGMetricsEventStatusCreated],
+                       [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError],
+                       [NSNumber numberWithInteger:_configuration.maxRetries],
+                       [NSNumber numberWithInteger:limit]];
 
-    NSMutableArray *objectsToSend = [NSMutableArray arrayWithCapacity:events.count];
-    [events enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
+    if ([events count] == 0) {
+        callback(YES);
+    } else {
+        NSMutableArray *activities = [NSMutableArray arrayWithCapacity:events.count];
 
-        [objectsToSend addObject:@{
-                                   @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
-                                   @"user": [UIDevice currentDevice].identifierForVendor.UUIDString,
-                                   @"app": @{
-                                           @"version": event.version,
-                                           @"bundleID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
-                                           },
-                                   @"info": event.userInfo
-                                   }];
-    }];
+        [activities enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
 
-    [_manager POST:@"activities"
-//     [_manager POST:@""
-        parameters:objectsToSend
-          progress:^(NSProgress * _Nonnull uploadProgress) {
-              NSLog(@"Progress: %qi/%qi", uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
-          } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-              [self manageSuccessForEvents:events
-                                  response:responseObject
-                                statusCode:httpResponse.statusCode];
-              callback(TRUE);
-          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-              [self manageErrorsForEvents:events
-                                statusCode:httpResponse.statusCode];
-              callback(FALSE);
-          }];
+            [activities addObject:@{
+                                    @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
+                                    @"version": event.version,
+                                    @"info": event.userInfo
+                                    }];
+        }];
+
+        [_manager POST:_configuration.path
+            parameters:@{
+                         @"user": [UIDevice currentDevice].identifierForVendor.UUIDString,
+                         @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
+                         @"activities": activities
+                         }
+              progress:^(NSProgress * _Nonnull uploadProgress) {
+                  NSLog(@"Progress: %qi/%qi", uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
+              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+                  [self manageSuccessForEvents:events
+                                      response:responseObject
+                                    statusCode:httpResponse.statusCode];
+                  callback(TRUE);
+              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+                  [self manageErrorsForEvents:events
+                                   statusCode:httpResponse.statusCode];
+                  callback(FALSE);
+              }];
+    }
 }
 
 
@@ -77,6 +86,18 @@
     [eventsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
         event.status = status;
+        [event save];
+    }];
+}
+
+
+- (void)updateEvents:(NSArray *)eventsArray withErrorStatus:(BSGMetricsEventStatus)status {
+    [eventsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
+        event.status = status;
+        NSLog(@"RetryCount bumped from... %li", event.retryCount);
+        event.retryCount += 1;
+        NSLog(@"to... %li", event.retryCount);
         [event save];
     }];
 }
@@ -115,7 +136,7 @@
     }
 
     [self updateEvents:messagesOK withStatus:BSGMetricsEventStatusSentWithSuccess];
-    [self updateEvents:messagesNOK withStatus:BSGMetricsEventStatusSentWithError];
+    [self updateEvents:messagesNOK withErrorStatus:BSGMetricsEventStatusSentWithError];
 }
 
 
@@ -134,8 +155,8 @@
             NSLog(@"Error: unexpected status code %li", statusCode);
         }
     }
-
-    [self updateEvents:events withStatus:BSGMetricsEventStatusSentWithError];
+    
+    [self updateEvents:events withErrorStatus:BSGMetricsEventStatusSentWithError];
 }
 
 

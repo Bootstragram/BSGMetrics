@@ -28,11 +28,9 @@
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 44.0)];
 
     UIBarButtonItem *startButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(startSending:)];
-    UIBarButtonItem *reloadButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-    UIBarButtonItem *trashButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(purge)];
-    UIBarButtonItem *retryButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(redo)];
+    UIBarButtonItem *stopButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(stopSending:)];
 
-    toolbar.items = @[ startButtonItem, retryButtonItem, trashButtonItem, reloadButtonItem ];
+    toolbar.items = @[ startButtonItem, stopButtonItem ];
 
     self.tableView.tableHeaderView = toolbar;
 
@@ -60,7 +58,7 @@
                                                  BSGMetricsEvent *event = (BSGMetricsEvent *)item;
 
                                                  myCell.textLabel.text = [_dateFormatter stringFromDate:event.createdAt];
-                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"%d", event.status];
+                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %d - Retry: %d", event.status, event.retryCount];
                                              }];
     self.tableView.dataSource = _dataSource;
     [self.tableView reloadData];
@@ -83,15 +81,8 @@
     }];
 }
 
-- (void)purge {
-    [_appDelegate.metrics prune];
-    [self reload];
-}
-
-- (void)redo {
-    [_appDelegate.metrics redoWithCompletion:^(BOOL success) {
-        [self reload];
-    }];
+- (IBAction)stopSending:(id)sender {
+    [_appDelegate.metrics stopSending];
 }
 
 @end

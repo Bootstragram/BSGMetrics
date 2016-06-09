@@ -10,8 +10,10 @@
 
 @interface BSGMetricsConfiguration : NSObject
 
-@property(strong, nonatomic) NSURL *baseURL;
+@property(strong, nonatomic) NSString *baseURL;
+@property(strong, nonatomic) NSString *path;
 @property NSTimeInterval frequency;
 @property NSInteger limit;
+@property NSInteger maxRetries;
 
 @end

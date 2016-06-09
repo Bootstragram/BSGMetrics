@@ -18,6 +18,7 @@
     _version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
+
 + (BOOL)eventWithUserInfo:(NSDictionary *)userInfo {
     BSGMetricsEvent *newEvent = [BSGMetricsEvent new];
     [newEvent setValuesWithUserInfo:userInfo];
@@ -41,5 +42,6 @@
         }
     }
 }
+
 
 @end

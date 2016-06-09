@@ -22,10 +22,11 @@ typedef NS_ENUM(NSInteger, BSGMetricsServiceResponseStatusCode) {
 @interface BSGMetricsService : NSObject
 
 @property(strong, nonatomic) AFHTTPSessionManager *manager;
+@property(strong, nonatomic) BSGMetricsConfiguration *configuration;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithConfig:(BSGMetricsConfiguration *)configuration;
 
-- (void)postEventsWithStatus:(BSGMetricsEventStatus)status limit:(NSInteger)limit completion:(void (^)(BOOL success))callback;
+- (void)postEventsWithLimit:(NSInteger)limit completion:(void (^)(BOOL success))callback;
 
 @end

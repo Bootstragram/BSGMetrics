@@ -11,7 +11,7 @@
 
 @implementation BSGMetrics
 
-+ (BSGMetrics *)open {
++ (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *dbPath = [documentsPath stringByAppendingPathComponent:@"BSGMetrics.sqlite3"];
 
@@ -63,11 +63,6 @@
     }];
 
     BSGMetrics *metrics = [[BSGMetrics alloc] init];
-
-    BSGMetricsConfiguration *configuration = [[BSGMetricsConfiguration alloc] init];
-    configuration.baseURL = [NSURL URLWithString:@"http://192.168.42.70:4567"];
-    configuration.limit = 10;
-    configuration.frequency = 15;
     metrics.configuration = configuration;
 
     BSGMetricsService *service = [[BSGMetricsService alloc] initWithConfig:metrics.configuration];
@@ -78,8 +73,23 @@
 
 
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
-    [_service postEventsWithStatus:BSGMetricsEventStatusCreated limit:_configuration.frequency completion:callback];
+    _sendCompletion = callback;
+
+    [_service postEventsWithLimit:_configuration.frequency completion:^(BOOL success) {
+        NSLog(@"Rescheduling...");
+        [self prune];
+        [self performSelector:@selector(startSendingWithCompletion:)
+                   withObject:callback
+                   afterDelay:_configuration.frequency];
+        _sendCompletion(success);
+    }];
 }
+
+
+- (void)prune {
+    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithSuccess]];
+}
+
 
 - (void)startSending {
     [self startSendingWithCompletion:^(BOOL success) {
@@ -87,18 +97,9 @@
     }];
 }
 
-- (void)prune {
-    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithSuccess]];
-}
-
-- (void)redoWithCompletion:(void (^)(BOOL success))callback {
-    [_service postEventsWithStatus:BSGMetricsEventStatusSentWithError limit:_configuration.frequency completion:callback];
-}
-
-- (void)redo {
-    [self redoWithCompletion:^(BOOL success) {
-        // Do nothing
-    }];
+- (void)stopSending {
+    NSLog(@"Cancelled scheduling...");
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startSendingWithCompletion:) object:_sendCompletion];
 }
 
 @end

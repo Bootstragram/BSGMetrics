@@ -16,15 +16,13 @@
 
 @property(strong, nonatomic) BSGMetricsService *service;
 @property(strong, nonatomic) BSGMetricsConfiguration *configuration;
+@property(copy, nonatomic) void(^sendCompletion) (BOOL);
 
-+ (BSGMetrics *)open;
++ (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration;
 
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback;
 - (void)startSending;
 
-- (void)redoWithCompletion:(void (^)(BOOL success))callback;
-- (void)redo;
-
-- (void)prune;
+- (void)stopSending;
 
 @end
