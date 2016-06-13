@@ -29,8 +29,9 @@
 
     UIBarButtonItem *startButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(startSending:)];
     UIBarButtonItem *stopButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(stopSending:)];
+    UIBarButtonItem *trashButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashItems:)];
 
-    toolbar.items = @[ startButtonItem, stopButtonItem ];
+    toolbar.items = @[ startButtonItem, stopButtonItem, trashButtonItem ];
 
     self.tableView.tableHeaderView = toolbar;
 
@@ -51,7 +52,6 @@
         _dateFormatter.timeStyle = NSDateFormatterLongStyle;
     }
     NSArray *allEvents = [BSGMetricsEvent allInstances];
-    NSLog(@"Reloading with %d events", [allEvents count]);
     _dataSource = [[BSGArrayDataSource alloc] initWithItems:allEvents
                                              cellIdentifier:@"BSGEventCell" configureCellBlock:^(id cell, id item) {
                                                  UITableViewCell *myCell = (UITableViewCell *)cell;
@@ -66,9 +66,7 @@
 
 - (IBAction)addEvent:(id)sender {
     BOOL result = [BSGMetricsEvent eventWithUserInfo:@{ @"key": @"value" }];
-    if (result) {
-        NSLog(@"addedEvent OK");
-    } else {
+    if (!result) {
         NSLog(@"addedEvent NOK");
     }
     [self reload];
@@ -83,6 +81,11 @@
 
 - (IBAction)stopSending:(id)sender {
     [_appDelegate.metrics stopSending];
+}
+
+- (IBAction)trashItems:(id)sender {
+    [_appDelegate.metrics pruneMessagesKO];
+    [self reload];
 }
 
 @end

@@ -17,6 +17,7 @@
 @property(strong, nonatomic) BSGMetricsService *service;
 @property(strong, nonatomic) BSGMetricsConfiguration *configuration;
 @property(copy, nonatomic) void(^sendCompletion) (BOOL);
+@property(nonatomic) BOOL started;
 
 + (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration;
 
@@ -24,5 +25,7 @@
 - (void)startSending;
 
 - (void)stopSending;
+
+- (void)pruneMessagesKO;
 
 @end

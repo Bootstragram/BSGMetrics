@@ -64,9 +64,8 @@
                          @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
                          @"activities": activities
                          }
-              progress:^(NSProgress * _Nonnull uploadProgress) {
-                  NSLog(@"Progress: %qi/%qi", uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
-              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              progress:nil
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                   [self manageSuccessForEvents:events
                                       response:responseObject
