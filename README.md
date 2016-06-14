@@ -27,3 +27,7 @@ Bootstragram, contact@bootstragram.com
 ## License
 
 BSGMetrics is available under the MIT license. See the LICENSE file for more info.
+
+## Tests
+
+* Tests could use Specta but Mick started with basic XCTest stuff.

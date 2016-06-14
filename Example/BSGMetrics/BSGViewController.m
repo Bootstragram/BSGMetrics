@@ -65,8 +65,8 @@
 }
 
 - (IBAction)addEvent:(id)sender {
-    BOOL result = [BSGMetricsEvent eventWithUserInfo:@{ @"key": @"value" }];
-    if (!result) {
+    BSGMetricsEvent *event = [BSGMetricsEvent eventWithUserInfo:@{ @"key": @"value" }];
+    if (!event) {
         NSLog(@"addedEvent NOK");
     }
     [self reload];

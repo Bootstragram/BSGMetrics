@@ -19,26 +19,26 @@
 }
 
 
-+ (BOOL)eventWithUserInfo:(NSDictionary *)userInfo {
++ (BSGMetricsEvent *)eventWithUserInfo:(NSDictionary *)userInfo {
     BSGMetricsEvent *newEvent = [BSGMetricsEvent new];
     [newEvent setValuesWithUserInfo:userInfo];
     FCModelSaveResult saveResult = [newEvent save];
 
     switch (saveResult) {
         case FCModelSaveFailed: {
-            return NO;
+            return nil;
         }
         case FCModelSaveRefused: {
-            return NO;
+            return nil;
         }
         case FCModelSaveNoChanges: {
-            return YES;
+            return newEvent;
         }
         case FCModelSaveSucceeded: {
-            return YES;
+            return newEvent;
         }
         default: {
-            return NO;
+            return nil;
         }
     }
 }
