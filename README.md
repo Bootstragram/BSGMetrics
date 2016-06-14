@@ -31,3 +31,4 @@ BSGMetrics is available under the MIT license. See the LICENSE file for more inf
 ## Tests
 
 * Tests could use Specta but Mick started with basic XCTest stuff.
+* Commit `638ae83` might have messed up the test target settings. Cf. https://github.com/CocoaPods/CocoaPods/issues/5512
