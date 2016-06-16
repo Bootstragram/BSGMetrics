@@ -41,9 +41,11 @@
     return @{
             @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
             @"appVersion": event.version,
-            @"localeIdentifier": [NSLocale currentLocale].localeIdentifier,
-            @"deviceSystemName": [[UIDevice currentDevice] systemName],
-            @"deviceSystemVersion": [[UIDevice currentDevice] systemVersion],
+            @"localeID": [NSLocale currentLocale].localeIdentifier,
+            @"os": @{
+                @"name": [[UIDevice currentDevice] systemName],
+                @"version": [[UIDevice currentDevice] systemVersion]
+            },
             @"deviceModel": [[UIDevice currentDevice] model],
             @"info": event.userInfo
             };
