@@ -9,7 +9,9 @@
 #import "BSGMetrics.h"
 #import "FCModel.h"
 
+
 @implementation BSGMetrics
+
 
 + (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -54,31 +56,32 @@
          if (! [db executeUpdate:@"CREATE TABLE..."]) failedAt(4);
          *schemaVersion = 3;
          }
-         
+
          */
 
-        NSLog(@"Committing with version %d", (* schemaVersion));
-        
+        NSLog(@"[BSGMetrics] Committing with version %d", (* schemaVersion));
+
         [db commit];
     }];
 
     BSGMetrics *metrics = [[BSGMetrics alloc] init];
     metrics.configuration = configuration;
-
-    BSGMetricsService *service = [[BSGMetricsService alloc] initWithConfig:metrics.configuration];
-    metrics.service = service;
+    metrics.service = [[BSGMetricsService alloc] initWithConfig:metrics.configuration];
+    metrics.started = NO;
 
     return metrics;
 }
 
 
-- (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
+- (void)privateStartSendingWithCompletion:(void (^)(BOOL success))callback {
+    NSLog(@"[BSGMetrics] Start sending...");
     _sendCompletion = callback;
 
     [_service postEventsWithLimit:_configuration.frequency completion:^(BOOL success) {
-        NSLog(@"Rescheduling...");
-        [self prune];
-        [self performSelector:@selector(startSendingWithCompletion:)
+        NSLog(@"[BSGMetrics] Pruning...");
+        [self pruneMessagesOK];
+        NSLog(@"[BSGMetrics] Rescheduling in %f.", _configuration.frequency);
+        [self performSelector:@selector(privateStartSendingWithCompletion:)
                    withObject:callback
                    afterDelay:_configuration.frequency];
         _sendCompletion(success);
@@ -86,8 +89,14 @@
 }
 
 
-- (void)prune {
-    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithSuccess]];
+- (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
+    if (_started) {
+        NSLog(@"[BSGMetrics] Already started");
+        return;
+    }
+    _started = YES;
+
+    [self privateStartSendingWithCompletion:callback];
 }
 
 
@@ -97,9 +106,27 @@
     }];
 }
 
+
 - (void)stopSending {
-    NSLog(@"Cancelled scheduling...");
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startSendingWithCompletion:) object:_sendCompletion];
+    NSLog(@"[BSGMetrics] Stop sending...");
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    _started = NO;
 }
+
+
+- (void)pruneMessagesOK {
+    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithSuccess]];
+}
+
+
+- (void)pruneMessagesKO {
+    [BSGMetricsEvent executeUpdateQuery:@"DELETE FROM $T WHERE status = ? AND retryCount >= ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError], [NSNumber numberWithInteger:_configuration.maxRetries]];
+}
+
+
+- (NSUInteger)countMessagesWithTooManyErrors {
+    return [BSGMetricsEvent numberOfInstancesWhere:@"status = ? AND retryCount >= ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError], [NSNumber numberWithInteger:_configuration.maxRetries]];
+}
+
 
 @end

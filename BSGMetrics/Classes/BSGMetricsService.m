@@ -30,9 +30,23 @@
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
         _dateFormatter = [[NSDateFormatter alloc] init];
-        [_dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
+        [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
     }
     return self;
+}
+
+
+- (NSDictionary *)activityDictionaryFromEvent:(BSGMetricsEvent *)event {
+    return @{
+            @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
+            @"appVersion": event.version,
+            @"localeIdentifier": [NSLocale currentLocale].localeIdentifier,
+            @"deviceSystemName": [[UIDevice currentDevice] systemName],
+            @"deviceSystemVersion": [[UIDevice currentDevice] systemVersion],
+            @"deviceModel": [[UIDevice currentDevice] model],
+            @"info": event.userInfo
+            };
 }
 
 
@@ -49,13 +63,7 @@
         NSMutableArray *activities = [NSMutableArray arrayWithCapacity:events.count];
 
         [events enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
-
-            [activities addObject:@{
-                                    @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
-                                    @"appVersion": event.version,
-                                    @"info": event.userInfo
-                                    }];
+            [activities addObject:[self activityDictionaryFromEvent:(BSGMetricsEvent *)obj]];
         }];
 
         [_manager POST:_configuration.path
@@ -64,9 +72,8 @@
                          @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
                          @"activities": activities
                          }
-              progress:^(NSProgress * _Nonnull uploadProgress) {
-                  NSLog(@"Progress: %qi/%qi", uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
-              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              progress:nil
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                   [self manageSuccessForEvents:events
                                       response:responseObject

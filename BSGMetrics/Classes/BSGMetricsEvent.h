@@ -27,6 +27,6 @@ typedef NS_ENUM(NSInteger, BSGMetricsEventStatus) {
 
 - (instancetype)init NS_UNAVAILABLE;
 
-+ (BOOL)eventWithUserInfo:(NSDictionary *)userInfo;
++ (BSGMetricsEvent *)eventWithUserInfo:(NSDictionary *)userInfo;
 
 @end
