@@ -15,7 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BSGMetricsConfiguration *configuration = [[BSGMetricsConfiguration alloc] init];
-    configuration.baseURL = @"http://localhost:4567";
+    configuration.baseURL = @"https://dev.bootstragram.com:4567";
     configuration.path = @"/";
     configuration.limit = 10;
     configuration.frequency = 5;

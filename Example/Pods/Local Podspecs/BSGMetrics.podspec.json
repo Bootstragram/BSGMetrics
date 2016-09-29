@@ -1,6 +1,6 @@
 {
   "name": "BSGMetrics",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "summary": "Send simple JSON for metrics collection.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/Bootstragram/BSGMetrics",
@@ -13,11 +13,11 @@
   },
   "source": {
     "git": "https://github.com/Bootstragram/BSGMetrics.git",
-    "tag": "0.1.0"
+    "tag": "0.1.3"
   },
   "social_media_url": "https://twitter.com/bootstragram",
   "platforms": {
-    "ios": "8.0"
+    "ios": "7.0"
   },
   "source_files": "BSGMetrics/Classes/**/*",
   "dependencies": {
