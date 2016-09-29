@@ -59,7 +59,7 @@
 
          */
 
-        NSLog(@"[BSGMetrics] Committing with version %d", (* schemaVersion));
+        NSLog(@"[BSGMetrics] DEBUG Committing with version %d", (* schemaVersion));
 
         [db commit];
     }];
@@ -74,29 +74,36 @@
 
 
 - (void)privateStartSendingWithCompletion:(void (^)(BOOL success))callback {
-    NSLog(@"[BSGMetrics] Start sending...");
-    _sendCompletion = callback;
+    if (_started) {
+        NSLog(@"[BSGMetrics] DEBUG Internal start sending...");
+        _sendCompletion = callback;
 
-    [_service postEventsWithLimit:_configuration.frequency completion:^(BOOL success) {
-        NSLog(@"[BSGMetrics] Pruning...");
-        [self pruneMessagesOK];
-        NSLog(@"[BSGMetrics] Rescheduling in %f.", _configuration.frequency);
-        [self performSelector:@selector(privateStartSendingWithCompletion:)
-                   withObject:callback
-                   afterDelay:_configuration.frequency];
-        _sendCompletion(success);
-    }];
+        [_service postEventsWithLimit:_configuration.frequency completion:^(BOOL success) {
+            NSLog(@"[BSGMetrics] DEBUG Pruning...");
+            [self pruneMessagesOK];
+
+            if (_started) {
+                NSLog(@"[BSGMetrics] DEBUG Rescheduling in %f.", _configuration.frequency);
+                [self performSelector:@selector(privateStartSendingWithCompletion:)
+                           withObject:callback
+                           afterDelay:_configuration.frequency];
+            }
+
+            _sendCompletion(success);
+        }];
+    }
 }
 
 
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
     if (_started) {
-        NSLog(@"[BSGMetrics] Already started");
+        NSLog(@"[BSGMetrics] WARN Already started");
         return;
+    } else {
+        NSLog(@"[BSGMetrics] INFO Start sending");
+        _started = YES;
+        [self privateStartSendingWithCompletion:callback];
     }
-    _started = YES;
-
-    [self privateStartSendingWithCompletion:callback];
 }
 
 
@@ -108,9 +115,9 @@
 
 
 - (void)stopSending {
-    NSLog(@"[BSGMetrics] Stop sending...");
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    NSLog(@"[BSGMetrics] INFO Stop sending...");
     _started = NO;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 

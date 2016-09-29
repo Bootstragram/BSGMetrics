@@ -40,6 +40,22 @@
     [self reload];
 }
 
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reload)
+                                                 name:@"BSGMetricsRefreshRequired"
+                                               object:nil];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"BSGMetricsRefreshRequired"
+                                                  object:nil];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -75,6 +91,7 @@
 
 - (IBAction)startSending:(id)sender {
     [_appDelegate.metrics startSendingWithCompletion:^(BOOL success) {
+        NSLog(@"[Delegate] Sent metrics? %@", success ? @"YES" : @"NO");
         [self reload];
     }];
 }

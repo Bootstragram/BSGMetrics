@@ -104,9 +104,9 @@
     [eventsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
         event.status = status;
-        NSLog(@"RetryCount bumped from... %li", event.retryCount);
+        NSLog(@"[BSGMetrics] DEBUG RetryCount bumped from... %li", event.retryCount);
         event.retryCount += 1;
-        NSLog(@"to... %li", event.retryCount);
+        NSLog(@"[BSGMetrics] DEBUG to... %li", event.retryCount);
         [event save];
     }];
 }
@@ -132,7 +132,7 @@
                 if ([recorded boolValue]) {
                     [messagesOK addObject:[events objectAtIndex:idx]];
                 } else {
-                    NSLog(@"Event not recorded: %@", [eventReport objectForKey:@"message"]);
+                    NSLog(@"[BSGMetrics] WARN Event not recorded: %@", [eventReport objectForKey:@"message"]);
                     [messagesNOK addObject:[events objectAtIndex:idx]];
                 }
             }];
@@ -140,7 +140,7 @@
         }
 
         default: {
-            NSLog(@"Error: unexpected status code %li", statusCode);
+            NSLog(@"[BSGMetrics] ERROR Unexpected status code %li", statusCode);
         }
     }
 
@@ -152,16 +152,16 @@
 - (void)manageErrorsForEvents:(NSArray *)events statusCode:(BSGMetricsServiceResponseStatusCode)statusCode {
     switch(statusCode) {
         case BSGMetricsServiceResponseStatusCodeMalformed: {
-            NSLog(@"Malformed messages");
+            NSLog(@"[BSGMetrics] WARN Malformed messages");
             break;
         }
         case BSGMetricsServiceResponseStatusCodeSystemError: {
-            NSLog(@"System errors");
+            NSLog(@"[BSGMetrics] WARN System errors");
             break;
         }
 
         default: {
-            NSLog(@"Error: unexpected status code %li", statusCode);
+            NSLog(@"[BSGMetrics] ERROR Unexpected status code %li", statusCode);
         }
     }
 
