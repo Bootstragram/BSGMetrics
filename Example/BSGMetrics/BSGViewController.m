@@ -35,7 +35,7 @@
 
     self.tableView.tableHeaderView = toolbar;
 
-    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    self.appDelegate = (BSGAppDelegate *)[[UIApplication sharedApplication] delegate];
 
     [self reload];
 }
@@ -58,7 +58,7 @@
                                                  BSGMetricsEvent *event = (BSGMetricsEvent *)item;
 
                                                  myCell.textLabel.text = [_dateFormatter stringFromDate:event.createdAt];
-                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %d - Retry: %d", event.status, event.retryCount];
+                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %ld - Retry: %ld", (long)event.status, (long)event.retryCount];
                                              }];
     self.tableView.dataSource = _dataSource;
     [self.tableView reloadData];
