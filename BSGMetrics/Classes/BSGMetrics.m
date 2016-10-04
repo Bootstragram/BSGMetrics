@@ -103,7 +103,7 @@
         NSLog(@"[BSGMetrics] DEBUG Internal start sending...");
         _sendCompletion = callback;
 
-        [_service postEventsWithLimit:_configuration.frequency completion:^(BOOL success) {
+        [_service postEventsWithLimit:_configuration.limit completion:^(BOOL success) {
             NSLog(@"[BSGMetrics] DEBUG Pruning...");
             [self pruneMessagesOK];
 
