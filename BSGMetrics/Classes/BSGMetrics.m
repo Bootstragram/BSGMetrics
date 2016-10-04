@@ -13,6 +13,9 @@
 @implementation BSGMetrics
 
 
+# pragma mark - Public methods
+
+
 + (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *dbPath = [documentsPath stringByAppendingPathComponent:@"BSGMetrics.sqlite3"];
@@ -73,6 +76,28 @@
 }
 
 
+- (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
+    if (_started) {
+        NSLog(@"[BSGMetrics] WARN Already started");
+        return;
+    } else {
+        NSLog(@"[BSGMetrics] INFO Start sending");
+        _started = YES;
+        [self privateStartSendingWithCompletion:callback];
+    }
+}
+
+
+- (void)stopSending {
+    NSLog(@"[BSGMetrics] INFO Stop sending...");
+    _started = NO;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+
+# pragma mark - Private stuff
+
+
 - (void)privateStartSendingWithCompletion:(void (^)(BOOL success))callback {
     if (_started) {
         NSLog(@"[BSGMetrics] DEBUG Internal start sending...");
@@ -92,32 +117,6 @@
             _sendCompletion(success);
         }];
     }
-}
-
-
-- (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
-    if (_started) {
-        NSLog(@"[BSGMetrics] WARN Already started");
-        return;
-    } else {
-        NSLog(@"[BSGMetrics] INFO Start sending");
-        _started = YES;
-        [self privateStartSendingWithCompletion:callback];
-    }
-}
-
-
-- (void)startSending {
-    [self startSendingWithCompletion:^(BOOL success) {
-        // Do nothing
-    }];
-}
-
-
-- (void)stopSending {
-    NSLog(@"[BSGMetrics] INFO Stop sending...");
-    _started = NO;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 

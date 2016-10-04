@@ -22,10 +22,7 @@
 + (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration;
 
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback;
-- (void)startSending;
-
 - (void)stopSending;
-
 - (void)pruneMessagesKO;
 
 @end
