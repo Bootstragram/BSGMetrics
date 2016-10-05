@@ -8,6 +8,12 @@
 
 #import "BSGMetricsEvent.h"
 
+@interface BSGMetricsEvent ()
+
+@property(nonatomic) int64_t id;
+
+@end
+
 @implementation BSGMetricsEvent
 
 - (void)setValuesWithUserInfo:(NSDictionary *)userInfo {

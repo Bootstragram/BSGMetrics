@@ -28,7 +28,7 @@ A client implementation for Bootstragram's BSGMetrics analytics product.
   s.source           = { :git => 'https://github.com/Bootstragram/BSGMetrics.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/bootstragram'
 
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '8.0'
 
   s.source_files = 'BSGMetrics/Classes/**/*'
 
@@ -36,7 +36,11 @@ A client implementation for Bootstragram's BSGMetrics analytics product.
   #   'BSGMetrics' => ['BSGMetrics/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  s.public_header_files = [
+    'BSGMetrics/Classes/BSGMetrics.h',
+    'BSGMetrics/Classes/BSGMetricsConfiguration.h',
+    'BSGMetrics/Classes/BSGMetricsEvent.h'
+  ]
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'AFNetworking'
   s.dependency 'FCModel'

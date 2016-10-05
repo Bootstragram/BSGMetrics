@@ -7,7 +7,17 @@
 //
 
 #import "BSGMetrics.h"
+#import "BSGMetricsService.h"
 #import "FCModel.h"
+
+@interface BSGMetrics ()
+
+@property(strong, nonatomic) BSGMetricsService *service;
+@property(strong, nonatomic) BSGMetricsConfiguration *configuration;
+@property(copy, nonatomic) void(^sendCompletion) (BOOL);
+@property(nonatomic) BOOL started;
+
+@end
 
 
 @implementation BSGMetrics
@@ -25,10 +35,11 @@
 
         // My custom failure handling. Yours may vary.
         void (^failedAt)(int statement) = ^(int statement){
-            int lastErrorCode = db.lastErrorCode;
-            NSString *lastErrorMessage = db.lastErrorMessage;
+            NSLog(@"[ERROR] Schema update failed");
+            //int lastErrorCode = db.lastErrorCode;
+            //NSString *lastErrorMessage = db.lastErrorMessage;
             [db rollback];
-            NSAssert3(0, @"Migration statement %d failed, code %d: %@", statement, lastErrorCode, lastErrorMessage);
+            //NSAssert3(0, @"Migration statement %d failed, code %d: %@", statement, lastErrorCode, lastErrorMessage);
         };
 
         if (*schemaVersion < 1) {

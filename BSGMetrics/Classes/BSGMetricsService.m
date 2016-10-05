@@ -104,9 +104,9 @@
     [eventsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
         event.status = status;
-        NSLog(@"[BSGMetrics] DEBUG RetryCount bumped from... %li", event.retryCount);
+        NSLog(@"[BSGMetrics] DEBUG RetryCount bumped from... %li", (long)event.retryCount);
         event.retryCount += 1;
-        NSLog(@"[BSGMetrics] DEBUG to... %li", event.retryCount);
+        NSLog(@"[BSGMetrics] DEBUG to... %li", (long)event.retryCount);
         [event save];
     }];
 }
@@ -140,7 +140,7 @@
         }
 
         default: {
-            NSLog(@"[BSGMetrics] ERROR Unexpected status code %li", statusCode);
+            NSLog(@"[BSGMetrics] ERROR Unexpected status code %li", (long)statusCode);
         }
     }
 
@@ -161,7 +161,7 @@
         }
 
         default: {
-            NSLog(@"[BSGMetrics] ERROR Unexpected status code %li", statusCode);
+            NSLog(@"[BSGMetrics] ERROR Unexpected status code %li", (long)statusCode);
         }
     }
 
