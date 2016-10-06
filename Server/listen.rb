@@ -7,13 +7,8 @@ require 'json'
 CERT_PATH = './'
 
 webrick_options = {
-        :Port               => 4567,
-        # :Logger             => WEBrick::Log::new($stderr, WEBrick::Log::DEBUG),
-        # :SSLEnable          => true,
-        # :SSLVerifyClient    => OpenSSL::SSL::VERIFY_NONE,
-        # :SSLCertificate     => OpenSSL::X509::Certificate.new(  File.open(File.join(CERT_PATH, "server.crt")).read),
-        # :SSLPrivateKey      => OpenSSL::PKey::RSA.new(          File.open(File.join(CERT_PATH, "server.key")).read),
-        # :SSLCertName        => [ [ "CN", WEBrick::Utils::getservername ] ]
+  :Host => "0.0.0.0",
+  :Port => 4567
 }
 
 class MyServer  < Sinatra::Base
@@ -24,6 +19,11 @@ class MyServer  < Sinatra::Base
 
       content_type :json
       { :key1 => 'value1', :key2 => 'value2' }.to_json
+    end
+
+    get '/' do
+      content_type :text
+      "BSGMetrics up"
     end
 end
 

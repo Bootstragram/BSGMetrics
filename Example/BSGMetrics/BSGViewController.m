@@ -35,10 +35,26 @@
 
     self.tableView.tableHeaderView = toolbar;
 
-    self.appDelegate = [[UIApplication sharedApplication] delegate];
+    self.appDelegate = (BSGAppDelegate *)[[UIApplication sharedApplication] delegate];
 
     [self reload];
 }
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reload)
+                                                 name:@"BSGMetricsRefreshRequired"
+                                               object:nil];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"BSGMetricsRefreshRequired"
+                                                  object:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -58,7 +74,7 @@
                                                  BSGMetricsEvent *event = (BSGMetricsEvent *)item;
 
                                                  myCell.textLabel.text = [_dateFormatter stringFromDate:event.createdAt];
-                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %d - Retry: %d", event.status, event.retryCount];
+                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %ld - Retry: %ld", (long)event.status, (long)event.retryCount];
                                              }];
     self.tableView.dataSource = _dataSource;
     [self.tableView reloadData];
@@ -75,6 +91,7 @@
 
 - (IBAction)startSending:(id)sender {
     [_appDelegate.metrics startSendingWithCompletion:^(BOOL success) {
+        NSLog(@"[Delegate] Sent metrics? %@", success ? @"YES" : @"NO");
         [self reload];
     }];
 }

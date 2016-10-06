@@ -19,9 +19,15 @@
 
 @end
 
-@interface BSGMetricsService (BSGMetricsEvent)
+@interface BSGMetricsService (BSGMetricsEventTests)
 
 - (NSDictionary *)activityDictionaryFromEvent:(BSGMetricsEvent *)event;
+
+@end
+
+@interface BSGMetricsEvent (BSGMetricsEventTests)
+
+- (void)testOnlySetCreatedAt:(NSDate *)date;
 
 @end
 
@@ -43,7 +49,7 @@
 - (void)testDatesAreUTCFormatted {
     // 1465917627.123 is June 14th 2016 - 17:20:27 Paris time
     // ie June 14th 2016 - 15:20:27 UTC
-    _event.createdAt = [NSDate dateWithTimeIntervalSince1970:1465917627.123];
+    [_event testOnlySetCreatedAt:[NSDate dateWithTimeIntervalSince1970:1465917627.123]];
     XCTAssertTrue([_event save]);
 
     NSDictionary *activity = [_service activityDictionaryFromEvent:_event];

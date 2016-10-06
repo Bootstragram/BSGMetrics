@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
 
-#import "BSGEvent.h"
 #import "BSGMetrics.h"
-#import "BSGMetricsService.h"
+#import "BSGMetricsConfiguration.h"
+#import "BSGMetricsEvent.h"
 
 FOUNDATION_EXPORT double BSGMetricsVersionNumber;
 FOUNDATION_EXPORT const unsigned char BSGMetricsVersionString[];

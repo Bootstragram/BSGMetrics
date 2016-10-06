@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - BSGMetrics (0.1.0):
+  - BSGMetrics (0.1.4):
     - AFNetworking
     - FCModel
   - BSGUtilities (0.4.1):
@@ -47,7 +47,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  BSGMetrics: bb01003c163a6de7ef2ad496db7e85e77e479788
+  BSGMetrics: 9277b9f7088c641e199cd7433442ff6225f43151
   BSGUtilities: 09b3a1877a3de110694db88469ccc0e25b048100
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   FCModel: 04bb289914e67f2275cb17fda869131a3529c1a5
@@ -57,4 +57,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 15fb4c4f23b21638091eb5f53da5862b3752f377
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.1.0.rc.2

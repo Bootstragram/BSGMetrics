@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BSGMetrics'
-  s.version          = '0.1.3'
+  s.version          = '0.1.4'
   s.summary          = 'Send simple JSON for metrics collection.'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+A client implementation for Bootstragram's BSGMetrics analytics product.
                        DESC
 
   s.homepage         = 'https://github.com/Bootstragram/BSGMetrics'
@@ -28,7 +28,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/Bootstragram/BSGMetrics.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/bootstragram'
 
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '8.0'
 
   s.source_files = 'BSGMetrics/Classes/**/*'
 
@@ -36,7 +36,11 @@ TODO: Add long description of the pod here.
   #   'BSGMetrics' => ['BSGMetrics/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  s.public_header_files = [
+    'BSGMetrics/Classes/BSGMetrics.h',
+    'BSGMetrics/Classes/BSGMetricsConfiguration.h',
+    'BSGMetrics/Classes/BSGMetricsEvent.h'
+  ]
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'AFNetworking'
   s.dependency 'FCModel'

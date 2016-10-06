@@ -2,13 +2,18 @@
 # * http://www.objc.io/issue-6/travis-ci.html
 # * https://github.com/supermarin/xcpretty#usage
 
-osx_image: xcode7.3
+osx_image: xcode8
 language: objective-c
 # cache: cocoapods
-# podfile: Example/Podfile
-# before_install:
-# - gem install cocoapods # Since Travis is not always on latest version
-# - pod install --project-directory=Example
+podfile: Example/Podfile
+
+before_install:
+  - bundle install
+  - bundle exec pod install --project-directory=Example
+
 script:
-- set -o pipefail && xcodebuild test -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
+  # This one fails due to http://stackoverflow.com/questions/37922146/xctests-failing-on-physical-device-canceling-tests-due-to-timeout/39896706#39896706
+  #- set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' test | xcpretty
+  - set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' test | xcpretty
+  - set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.0' test | xcpretty
+  - pod lib lint --allow-warnings

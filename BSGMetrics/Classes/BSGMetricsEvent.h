@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FCModel.h"
+#import <FCModel/FCModel.h>
+
 
 typedef NS_ENUM(NSInteger, BSGMetricsEventStatus) {
     BSGMetricsEventStatusCreated = 1,
@@ -17,13 +18,11 @@ typedef NS_ENUM(NSInteger, BSGMetricsEventStatus) {
 
 @interface BSGMetricsEvent : FCModel
 
-@property(nonatomic) int64_t id;
-@property(strong, nonatomic) NSDictionary *userInfo;
-@property(strong, nonatomic) NSDate *createdAt;
+@property(strong, readonly, nonatomic) NSDate *createdAt;
+@property(strong, readonly, nonatomic) NSString *version;
+@property(strong, readonly, nonatomic) NSDictionary *userInfo;
 @property(nonatomic) BSGMetricsEventStatus status;
-@property(nonatomic) NSString *version;
 @property(nonatomic) NSInteger retryCount;
-
 
 - (instancetype)init NS_UNAVAILABLE;
 

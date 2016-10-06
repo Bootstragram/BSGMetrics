@@ -8,6 +8,17 @@
 
 #import "BSGMetricsEvent.h"
 
+@interface BSGMetricsEvent ()
+
+@property(nonatomic) int64_t id;
+
+// Redeclare as readwrite
+@property(strong, readwrite, nonatomic) NSDate *createdAt;
+@property(strong, readwrite, nonatomic) NSString *version;
+@property(strong, readwrite, nonatomic) NSDictionary *userInfo;
+
+@end
+
 @implementation BSGMetricsEvent
 
 - (void)setValuesWithUserInfo:(NSDictionary *)userInfo {
@@ -41,6 +52,11 @@
             return nil;
         }
     }
+}
+
+
+- (void)testOnlySetCreatedAt:(NSDate *)date {
+    _createdAt = date;
 }
 
 

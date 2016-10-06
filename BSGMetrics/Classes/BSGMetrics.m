@@ -7,10 +7,23 @@
 //
 
 #import "BSGMetrics.h"
+#import "BSGMetricsService.h"
 #import "FCModel.h"
+
+@interface BSGMetrics ()
+
+@property(strong, nonatomic) BSGMetricsService *service;
+@property(strong, nonatomic) BSGMetricsConfiguration *configuration;
+@property(copy, nonatomic) void(^sendCompletion) (BOOL);
+@property(nonatomic) BOOL started;
+
+@end
 
 
 @implementation BSGMetrics
+
+
+# pragma mark - Public methods
 
 
 + (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration {
@@ -22,10 +35,11 @@
 
         // My custom failure handling. Yours may vary.
         void (^failedAt)(int statement) = ^(int statement){
-            int lastErrorCode = db.lastErrorCode;
-            NSString *lastErrorMessage = db.lastErrorMessage;
+            NSLog(@"[ERROR] Schema update failed");
+            //int lastErrorCode = db.lastErrorCode;
+            //NSString *lastErrorMessage = db.lastErrorMessage;
             [db rollback];
-            NSAssert3(0, @"Migration statement %d failed, code %d: %@", statement, lastErrorCode, lastErrorMessage);
+            //NSAssert3(0, @"Migration statement %d failed, code %d: %@", statement, lastErrorCode, lastErrorMessage);
         };
 
         if (*schemaVersion < 1) {
@@ -59,7 +73,7 @@
 
          */
 
-        NSLog(@"[BSGMetrics] Committing with version %d", (* schemaVersion));
+        NSLog(@"[BSGMetrics] DEBUG Committing with version %d", (* schemaVersion));
 
         [db commit];
     }];
@@ -73,44 +87,47 @@
 }
 
 
-- (void)privateStartSendingWithCompletion:(void (^)(BOOL success))callback {
-    NSLog(@"[BSGMetrics] Start sending...");
-    _sendCompletion = callback;
-
-    [_service postEventsWithLimit:_configuration.frequency completion:^(BOOL success) {
-        NSLog(@"[BSGMetrics] Pruning...");
-        [self pruneMessagesOK];
-        NSLog(@"[BSGMetrics] Rescheduling in %f.", _configuration.frequency);
-        [self performSelector:@selector(privateStartSendingWithCompletion:)
-                   withObject:callback
-                   afterDelay:_configuration.frequency];
-        _sendCompletion(success);
-    }];
-}
-
-
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
     if (_started) {
-        NSLog(@"[BSGMetrics] Already started");
+        NSLog(@"[BSGMetrics] WARN Already started");
         return;
+    } else {
+        NSLog(@"[BSGMetrics] INFO Start sending");
+        _started = YES;
+        [self privateStartSendingWithCompletion:callback];
     }
-    _started = YES;
-
-    [self privateStartSendingWithCompletion:callback];
-}
-
-
-- (void)startSending {
-    [self startSendingWithCompletion:^(BOOL success) {
-        // Do nothing
-    }];
 }
 
 
 - (void)stopSending {
-    NSLog(@"[BSGMetrics] Stop sending...");
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    NSLog(@"[BSGMetrics] INFO Stop sending...");
     _started = NO;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+
+# pragma mark - Private stuff
+
+
+- (void)privateStartSendingWithCompletion:(void (^)(BOOL success))callback {
+    if (_started) {
+        NSLog(@"[BSGMetrics] DEBUG Internal start sending...");
+        _sendCompletion = callback;
+
+        [_service postEventsWithLimit:_configuration.limit completion:^(BOOL success) {
+            NSLog(@"[BSGMetrics] DEBUG Pruning...");
+            [self pruneMessagesOK];
+
+            if (_started) {
+                NSLog(@"[BSGMetrics] DEBUG Rescheduling in %f.", _configuration.frequency);
+                [self performSelector:@selector(privateStartSendingWithCompletion:)
+                           withObject:callback
+                           afterDelay:_configuration.frequency];
+            }
+
+            _sendCompletion(success);
+        }];
+    }
 }
 
 
