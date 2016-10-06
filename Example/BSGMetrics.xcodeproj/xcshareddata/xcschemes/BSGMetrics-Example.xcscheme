@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F589195388D20070C39A"
-               BuildableName = "BSGMetrics_Example.app"
+               BuildableName = "BSGMetrics.app"
                BlueprintName = "BSGMetrics_Example"
                ReferencedContainer = "container:BSGMetrics.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "BSGMetrics_Example.app"
+            BuildableName = "BSGMetrics.app"
             BlueprintName = "BSGMetrics_Example"
             ReferencedContainer = "container:BSGMetrics.xcodeproj">
          </BuildableReference>
@@ -73,7 +73,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "BSGMetrics_Example.app"
+            BuildableName = "BSGMetrics.app"
             BlueprintName = "BSGMetrics_Example"
             ReferencedContainer = "container:BSGMetrics.xcodeproj">
          </BuildableReference>
@@ -104,7 +104,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "BSGMetrics_Example.app"
+            BuildableName = "BSGMetrics.app"
             BlueprintName = "BSGMetrics_Example"
             ReferencedContainer = "container:BSGMetrics.xcodeproj">
          </BuildableReference>
