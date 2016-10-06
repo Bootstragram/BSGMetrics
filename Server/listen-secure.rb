@@ -4,7 +4,7 @@ require 'webrick/https'
 require 'openssl'
 require 'json'
 
-CERT_PATH = './'
+CERT_PATH = './Server/'
 
 webrick_options = {
   :Host               => "0.0.0.0",

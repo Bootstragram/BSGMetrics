@@ -28,6 +28,13 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+#ifdef DEBUG
+    NSString *buildConfiguration = [[NSProcessInfo processInfo] environment][@"TEST"];
+    if (buildConfiguration != nil) {
+        NSLog(@"Test mode");
+        return;
+    }
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(collectMetricsEvent:)
                                                  name:@"BSGMetricsNotification"
@@ -47,6 +54,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BSGMetricsRefreshRequired"
                                                             object:nil];
     }];
+#endif
 }
 
 

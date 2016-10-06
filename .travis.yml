@@ -6,9 +6,14 @@ osx_image: xcode8
 language: objective-c
 # cache: cocoapods
 podfile: Example/Podfile
+
 before_install:
-- bundle install
-- bundle exec pod install --project-directory=Example
+  - bundle install
+  - bundle exec pod install --project-directory=Example
+
 script:
-- set -o pipefail && xcodebuild test -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator10.0 ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
+  # This one fails due to http://stackoverflow.com/questions/37922146/xctests-failing-on-physical-device-canceling-tests-due-to-timeout/39896706#39896706
+  #- set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' test | xcpretty
+  - set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' test | xcpretty
+  - set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.0' test | xcpretty
+  - pod lib lint --allow-warnings

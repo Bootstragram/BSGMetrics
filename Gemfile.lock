@@ -51,19 +51,32 @@ GEM
     molinillo (0.5.1)
     nap (1.1.0)
     netrc (0.7.8)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rouge (1.11.1)
+    sinatra (1.4.7)
+      rack (~> 1.5)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
     thread_safe (0.3.5)
+    tilt (2.0.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     xcodeproj (1.3.1)
       activesupport (>= 3)
       claide (>= 1.0.0, < 2.0)
       colored (~> 1.2)
+    xcpretty (0.2.3)
+      rouge (~> 1.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   cocoapods (= 1.1.0.rc.2)
+  sinatra
+  xcpretty
 
 RUBY VERSION
    ruby 2.2.5p319
