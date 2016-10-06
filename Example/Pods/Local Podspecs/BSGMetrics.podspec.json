@@ -1,8 +1,8 @@
 {
   "name": "BSGMetrics",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "summary": "Send simple JSON for metrics collection.",
-  "description": "TODO: Add long description of the pod here.",
+  "description": "A client implementation for Bootstragram's BSGMetrics analytics product.",
   "homepage": "https://github.com/Bootstragram/BSGMetrics",
   "license": {
     "type": "MIT",
@@ -13,13 +13,18 @@
   },
   "source": {
     "git": "https://github.com/Bootstragram/BSGMetrics.git",
-    "tag": "0.1.3"
+    "tag": "0.1.4"
   },
   "social_media_url": "https://twitter.com/bootstragram",
   "platforms": {
-    "ios": "7.0"
+    "ios": "8.0"
   },
   "source_files": "BSGMetrics/Classes/**/*",
+  "public_header_files": [
+    "BSGMetrics/Classes/BSGMetrics.h",
+    "BSGMetrics/Classes/BSGMetricsConfiguration.h",
+    "BSGMetrics/Classes/BSGMetricsEvent.h"
+  ],
   "dependencies": {
     "AFNetworking": [
 
