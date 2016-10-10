@@ -33,25 +33,7 @@
 + (BSGMetricsEvent *)eventWithUserInfo:(NSDictionary *)userInfo {
     BSGMetricsEvent *newEvent = [BSGMetricsEvent new];
     [newEvent setValuesWithUserInfo:userInfo];
-    FCModelSaveResult saveResult = [newEvent save];
-
-    switch (saveResult) {
-        case FCModelSaveFailed: {
-            return nil;
-        }
-        case FCModelSaveRefused: {
-            return nil;
-        }
-        case FCModelSaveNoChanges: {
-            return newEvent;
-        }
-        case FCModelSaveSucceeded: {
-            return newEvent;
-        }
-        default: {
-            return nil;
-        }
-    }
+    return newEvent;
 }
 
 

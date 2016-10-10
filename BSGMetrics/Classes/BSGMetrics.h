@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BSGMetricsEvent.h"
 #import "BSGMetricsConfiguration.h"
 
 
@@ -15,8 +14,13 @@
 
 + (BSGMetrics *)openWithConfiguration:(BSGMetricsConfiguration *)configuration;
 
+- (id)init NS_UNAVAILABLE;
+- (id)initWithConfiguration:(BSGMetricsConfiguration *)configuration;
+
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback;
 - (void)stopSending;
 - (void)pruneMessagesKO;
+
+- (void)eventWithUserInfo:(NSDictionary *)userInfo;
 
 @end

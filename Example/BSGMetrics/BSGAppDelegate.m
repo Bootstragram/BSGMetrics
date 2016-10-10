@@ -67,11 +67,7 @@
 
 
 - (void)collectMetricsEvent:(NSNotification *)notification {
-    if ([BSGMetricsEvent eventWithUserInfo:notification.userInfo]) {
-        NSLog(@"[Delegate] Event registered");
-    } else {
-        NSLog(@"[Delegate] Event couldn't be registered");
-    }
+    [_metrics eventWithUserInfo:notification.userInfo];
 }
 
 

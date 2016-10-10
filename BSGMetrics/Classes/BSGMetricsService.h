@@ -27,6 +27,6 @@ typedef NS_ENUM(NSInteger, BSGMetricsServiceResponseStatusCode) {
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithConfig:(BSGMetricsConfiguration *)configuration;
 
-- (void)postEventsWithLimit:(NSInteger)limit completion:(void (^)(BOOL success))callback;
+- (void)postEventsWithCompletion:(void (^)(BOOL success))callback;
 
 @end

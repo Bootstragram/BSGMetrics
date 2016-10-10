@@ -11,7 +11,6 @@
 #import "BSGMetricsEvent.h"
 #import "BSGMetricsService.h"
 
-
 @interface BSGMetricsEventTests : XCTestCase
 
 @property(strong, nonatomic) BSGMetricsEvent *event;
@@ -28,6 +27,7 @@
 @interface BSGMetricsEvent (BSGMetricsEventTests)
 
 - (void)testOnlySetCreatedAt:(NSDate *)date;
++ (BSGMetricsEvent *)eventWithUserInfo:(NSDictionary *)userInfo;
 
 @end
 
