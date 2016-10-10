@@ -8,6 +8,17 @@
 
 #import "BSGMetricsService.h"
 #import "BSGMetricsConfiguration.h"
+#import <sys/utsname.h>
+
+
+NSString* deviceName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
 
 
 @interface BSGMetricsService ()
@@ -47,6 +58,7 @@
                 @"version": [[UIDevice currentDevice] systemVersion]
             },
             @"deviceModel": [[UIDevice currentDevice] model],
+            @"deviceName": deviceName(),
             @"info": event.userInfo
             };
 }
