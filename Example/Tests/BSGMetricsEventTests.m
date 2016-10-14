@@ -8,8 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "BSGMetricsEvent.h"
-#import "BSGMetricsService.h"
+@import BSGMetrics;
+#import <BSGMetrics/BSGMetricsService.h>
 
 @interface BSGMetricsEventTests : XCTestCase
 
