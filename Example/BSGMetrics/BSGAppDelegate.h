@@ -7,7 +7,7 @@
 //
 
 @import UIKit;
-#import "BSGMetrics.h"
+@import BSGMetrics;
 
 @interface BSGAppDelegate : UIResponder <UIApplicationDelegate>
 
