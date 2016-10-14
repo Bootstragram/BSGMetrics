@@ -57,8 +57,7 @@ NSString* deviceName()
                 @"name": [[UIDevice currentDevice] systemName],
                 @"version": [[UIDevice currentDevice] systemVersion]
             },
-            @"deviceModel": [[UIDevice currentDevice] model],
-            @"deviceName": deviceName(),
+            @"deviceModel": deviceName(),
             @"info": event.userInfo
             };
 }
