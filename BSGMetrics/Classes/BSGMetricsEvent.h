@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, BSGMetricsEventStatus) {
 @property(strong, readonly, nonatomic) NSDate *createdAt;
 @property(strong, readonly, nonatomic) NSString *version;
 @property(strong, readonly, nonatomic) NSDictionary *userInfo;
+@property(strong, readonly, nonatomic) NSString *uuid;
 @property(nonatomic) BSGMetricsEventStatus status;
 @property(nonatomic) NSInteger retryCount;
 

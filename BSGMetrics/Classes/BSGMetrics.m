@@ -69,17 +69,17 @@
             *schemaVersion = 1;
         }
 
-        // If you wanted to change the schema in a later app version, you'd add something like this here:
-        /*
-         if (*schemaVersion < 2) {
-         if (! [db executeUpdate:@"ALTER TABLE Person ADD COLUMN title TEXT NOT NULL DEFAULT ''"]) failedAt(3);
-         *schemaVersion = 2;
-         //if (! [db executeUpdate:@"CREATE INDEX IF NOT EXISTS status ON Person (name);"]) failedAt(2);
-         }
+        if (*schemaVersion < 2) {
+            if (! [db executeUpdate:@"ALTER TABLE BSGMetricsEvent ADD COLUMN uuid TEXT NOT NULL DEFAULT ''"]) failedAt(3);
+            *schemaVersion = 2;
+        }
 
+        /*
+         // If you wanted to change the schema in a later app version, you'd add something like this here:
          // And so on...
          if (*schemaVersion < 3) {
-         if (! [db executeUpdate:@"CREATE TABLE..."]) failedAt(4);
+             //if (! [db executeUpdate:@"CREATE INDEX IF NOT EXISTS status ON Person (name);"]) failedAt(2);
+             if (! [db executeUpdate:@"CREATE TABLE..."]) failedAt(4);
          *schemaVersion = 3;
          }
 

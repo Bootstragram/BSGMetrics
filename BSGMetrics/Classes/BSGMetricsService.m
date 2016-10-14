@@ -50,6 +50,7 @@ NSString* deviceName()
 
 - (NSDictionary *)activityDictionaryFromEvent:(BSGMetricsEvent *)event {
     return @{
+            @"uuid": event.uuid,
             @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
             @"appVersion": event.version,
             @"localeID": [NSLocale currentLocale].localeIdentifier,
@@ -64,6 +65,12 @@ NSString* deviceName()
 
 
 - (void)postEventsWithCompletion:(void (^)(BOOL success))callback {
+    NSInteger pendingMessages = [BSGMetricsEvent
+                                  numberOfInstancesWhere:@"(status = ?) OR (status = ? AND retryCount < ?)",
+                                  [NSNumber numberWithInteger:BSGMetricsEventStatusCreated],
+                                  [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError],
+                                  [NSNumber numberWithInteger:_configuration.maxRetries]];
+
     NSArray *events = [BSGMetricsEvent instancesWhere:@"(status = ?) OR (status = ? AND retryCount < ?) ORDER BY createdAt LIMIT ?",
                        [NSNumber numberWithInteger:BSGMetricsEventStatusCreated],
                        [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError],
@@ -82,12 +89,21 @@ NSString* deviceName()
 #ifdef DEBUG
         NSLog(@"[BSGMetrics][%@] Posting...", [NSThread currentThread]);
 #endif
+
+        NSMutableDictionary *postMessage = [[NSMutableDictionary alloc] initWithDictionary:@{
+                                            @"userID": [UIDevice currentDevice].identifierForVendor.UUIDString,
+                                            @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
+                                            @"activities": activities
+                                            }];
+        if (pendingMessages > _configuration.limit) {
+            [postMessage setObject:@{
+                                     @"pendingMessages": [NSNumber numberWithInteger:(pendingMessages - _configuration.limit)]
+                                     }
+                            forKey:@"metricsClient"];
+        }
+
         [_manager POST:_configuration.path
-            parameters:@{
-                         @"userID": [UIDevice currentDevice].identifierForVendor.UUIDString,
-                         @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
-                         @"activities": activities
-                         }
+            parameters:postMessage
               progress:nil
               success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 #ifdef DEBUG

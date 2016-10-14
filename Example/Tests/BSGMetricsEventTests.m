@@ -36,7 +36,7 @@
 - (void)setUp {
     [super setUp];
 
-    self.event = [BSGMetricsEvent eventWithUserInfo:@{ @"myKey": @"myValue" }];
+    self.event = [BSGMetricsEvent eventWithUserInfo:@{ @"myUnitTestKey": @"myUnitTestValue" }];
     self.service = [[BSGMetricsService alloc] initWithConfig:nil];
 }
 
