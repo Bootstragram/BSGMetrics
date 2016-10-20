@@ -8,9 +8,8 @@
 
 #import "BSGViewController.h"
 #import "BSGArrayDataSource.h"
-#import "BSGMetrics.h"
-#import "BSGMetricsEvent.h"
 #import "BSGAppDelegate.h"
+@import BSGMetrics;
 
 
 @interface BSGViewController ()

@@ -97,7 +97,8 @@ NSString* deviceName()
                                             }];
         if (pendingMessages > _configuration.limit) {
             [postMessage setObject:@{
-                                     @"pendingMessages": [NSNumber numberWithInteger:(pendingMessages - _configuration.limit)]
+                                     @"pendingMessages": [NSNumber numberWithInteger:(pendingMessages - _configuration.limit)],
+                                     @"appVersion": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
                                      }
                             forKey:@"metricsClient"];
         }

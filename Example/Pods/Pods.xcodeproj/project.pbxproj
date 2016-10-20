@@ -167,9 +167,9 @@
 		A591D23280101EE099A32070A029AAEA /* XCTestCase+Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = F50DB023727DB4E98FE53BE268A5C3F0 /* XCTestCase+Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C6019D45BE62C61210A9CC619368EF /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EB583F1B44FB502A1FFB1A820F4F7B /* AFNetworkActivityIndicatorManager.m */; };
 		A749E3E688A0DE1DA399784D8C1D3481 /* MMHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 85A6AE0BB727B84F765197C9C5AA69E7 /* MMHTMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A8A8FC68B51D0EB86065AC00BFE86175 /* BSGMetricsService.h in Headers */ = {isa = PBXBuildFile; fileRef = 97E8AFB0683B5CA3F2EAA6E2FCDE6E74 /* BSGMetricsService.h */; settings = {ATTRIBUTES = (Project, Public, ); }; };
 		A90331E90F66DCDB0C5FD9A4BB6B1EFE /* SPTCallSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FCE196D850DB6BE2AD6D1B040DA0984 /* SPTCallSite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94BA8F463B92DDCD645736E5B9FF5C0 /* NSDictionary+BSGJSONUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A81D76CE72C63EE8D8A9C018C345055D /* NSDictionary+BSGJSONUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA14531D8BBCE4C5D2FA0D9510E08756 /* BSGMetricsService.h in Headers */ = {isa = PBXBuildFile; fileRef = 97E8AFB0683B5CA3F2EAA6E2FCDE6E74 /* BSGMetricsService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB39AC9746E7575D7449700475E41B0B /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 63B4ED368A03D4F0C288E315B7028BF9 /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE2A07407FB50BA249984DC0620E84C0 /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = FDACCF3A1C5E8F70280B76BDD1D22785 /* UIWebView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AF03C11A1FAC8132AD3749D8F541701A /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C993E6A8CF2A9B504E14BEC3213E54B /* UIButton+AFNetworking.m */; };
@@ -1334,7 +1334,7 @@
 				8D8E9614008130BD5915FAD3B757D302 /* BSGMetricsConfiguration.h in Headers */,
 				803B5D509A5B543635FFF9BE019E45FB /* BSGMetricsEvent.h in Headers */,
 				6451F12B68BB362AD0016CDD3253E13B /* BSGMetricsSendOperation.h in Headers */,
-				A8A8FC68B51D0EB86065AC00BFE86175 /* BSGMetricsService.h in Headers */,
+				AA14531D8BBCE4C5D2FA0D9510E08756 /* BSGMetricsService.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
