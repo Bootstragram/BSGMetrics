@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ 
+ The configuration object for BSGMetrics.
+
+ */
 @interface BSGMetricsConfiguration : NSObject
 
 
