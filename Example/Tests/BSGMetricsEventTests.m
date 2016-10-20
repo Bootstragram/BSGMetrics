@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 
 @import BSGMetrics;
-#import <BSGMetrics/BSGMetricsService.h>
 
 @interface BSGMetricsEventTests : XCTestCase
 

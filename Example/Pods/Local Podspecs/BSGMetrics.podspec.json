@@ -23,7 +23,8 @@
   "public_header_files": [
     "BSGMetrics/Classes/BSGMetrics.h",
     "BSGMetrics/Classes/BSGMetricsConfiguration.h",
-    "BSGMetrics/Classes/BSGMetricsEvent.h"
+    "BSGMetrics/Classes/BSGMetricsEvent.h",
+    "BSGMetrics/Classes/BSGMetricsService.h"
   ],
   "dependencies": {
     "AFNetworking": [
