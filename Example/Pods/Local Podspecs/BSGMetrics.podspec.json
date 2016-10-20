@@ -1,6 +1,6 @@
 {
   "name": "BSGMetrics",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "summary": "Send simple JSON for metrics collection.",
   "description": "A client implementation for Bootstragram's BSGMetrics analytics product.",
   "homepage": "https://github.com/Bootstragram/BSGMetrics",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/Bootstragram/BSGMetrics.git",
-    "tag": "0.1.4"
+    "tag": "0.1.5"
   },
   "social_media_url": "https://twitter.com/bootstragram",
   "platforms": {
@@ -23,7 +23,8 @@
   "public_header_files": [
     "BSGMetrics/Classes/BSGMetrics.h",
     "BSGMetrics/Classes/BSGMetricsConfiguration.h",
-    "BSGMetrics/Classes/BSGMetricsEvent.h"
+    "BSGMetrics/Classes/BSGMetricsEvent.h",
+    "BSGMetrics/Classes/BSGMetricsService.h"
   ],
   "dependencies": {
     "AFNetworking": [

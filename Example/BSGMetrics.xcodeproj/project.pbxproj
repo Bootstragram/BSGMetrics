@@ -570,6 +570,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -582,7 +583,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BSGMetrics_Example.app/BSGMetrics_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BSGMetrics.app/BSGMetrics";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -599,6 +600,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -611,7 +613,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BSGMetrics_Example.app/BSGMetrics_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BSGMetrics.app/BSGMetrics";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;

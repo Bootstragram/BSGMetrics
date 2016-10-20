@@ -8,8 +8,8 @@
 
 #import "BSGViewController.h"
 #import "BSGArrayDataSource.h"
-#import "BSGMetrics.h"
 #import "BSGAppDelegate.h"
+@import BSGMetrics;
 
 
 @interface BSGViewController ()
@@ -81,10 +81,9 @@
 }
 
 - (IBAction)addEvent:(id)sender {
-    BSGMetricsEvent *event = [BSGMetricsEvent eventWithUserInfo:@{ @"key": @"value" }];
-    if (!event) {
-        NSLog(@"addedEvent NOK");
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BSGMetricsNotification"
+                                                        object:self
+                                                      userInfo:@{ @"event": @"userGeneratedEvent" }];
     [self reload];
 }
 

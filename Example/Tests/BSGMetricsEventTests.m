@@ -8,9 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "BSGMetricsEvent.h"
-#import "BSGMetricsService.h"
-
+@import BSGMetrics;
 
 @interface BSGMetricsEventTests : XCTestCase
 
@@ -28,6 +26,7 @@
 @interface BSGMetricsEvent (BSGMetricsEventTests)
 
 - (void)testOnlySetCreatedAt:(NSDate *)date;
++ (BSGMetricsEvent *)eventWithUserInfo:(NSDictionary *)userInfo;
 
 @end
 
@@ -36,7 +35,7 @@
 - (void)setUp {
     [super setUp];
 
-    self.event = [BSGMetricsEvent eventWithUserInfo:@{ @"myKey": @"myValue" }];
+    self.event = [BSGMetricsEvent eventWithUserInfo:@{ @"myUnitTestKey": @"myUnitTestValue" }];
     self.service = [[BSGMetricsService alloc] initWithConfig:nil];
 }
 

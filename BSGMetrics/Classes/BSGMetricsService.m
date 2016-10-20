@@ -8,6 +8,17 @@
 
 #import "BSGMetricsService.h"
 #import "BSGMetricsConfiguration.h"
+#import <sys/utsname.h>
+
+
+NSString* deviceName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
 
 
 @interface BSGMetricsService ()
@@ -39,6 +50,7 @@
 
 - (NSDictionary *)activityDictionaryFromEvent:(BSGMetricsEvent *)event {
     return @{
+            @"uuid": event.uuid,
             @"createdAt": [_dateFormatter stringFromDate:event.createdAt],
             @"appVersion": event.version,
             @"localeID": [NSLocale currentLocale].localeIdentifier,
@@ -46,18 +58,24 @@
                 @"name": [[UIDevice currentDevice] systemName],
                 @"version": [[UIDevice currentDevice] systemVersion]
             },
-            @"deviceModel": [[UIDevice currentDevice] model],
+            @"deviceModel": deviceName(),
             @"info": event.userInfo
             };
 }
 
 
-- (void)postEventsWithLimit:(NSInteger)limit completion:(void (^)(BOOL success))callback {
+- (void)postEventsWithCompletion:(void (^)(BOOL success))callback {
+    NSInteger pendingMessages = [BSGMetricsEvent
+                                  numberOfInstancesWhere:@"(status = ?) OR (status = ? AND retryCount < ?)",
+                                  [NSNumber numberWithInteger:BSGMetricsEventStatusCreated],
+                                  [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError],
+                                  [NSNumber numberWithInteger:_configuration.maxRetries]];
+
     NSArray *events = [BSGMetricsEvent instancesWhere:@"(status = ?) OR (status = ? AND retryCount < ?) ORDER BY createdAt LIMIT ?",
                        [NSNumber numberWithInteger:BSGMetricsEventStatusCreated],
                        [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError],
                        [NSNumber numberWithInteger:_configuration.maxRetries],
-                       [NSNumber numberWithInteger:limit]];
+                       [NSNumber numberWithInteger:_configuration.limit]];
 
     if ([events count] == 0) {
         callback(YES);
@@ -68,20 +86,41 @@
             [activities addObject:[self activityDictionaryFromEvent:(BSGMetricsEvent *)obj]];
         }];
 
+#ifdef DEBUG
+        NSLog(@"[BSGMetrics][%@] Posting...", [NSThread currentThread]);
+#endif
+
+        NSMutableDictionary *postMessage = [[NSMutableDictionary alloc] initWithDictionary:@{
+                                            @"userID": [UIDevice currentDevice].identifierForVendor.UUIDString,
+                                            @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
+                                            @"activities": activities
+                                            }];
+        if (pendingMessages > _configuration.limit) {
+            [postMessage setObject:@{
+                                     @"pendingMessages": [NSNumber numberWithInteger:(pendingMessages - _configuration.limit)],
+                                     @"appVersion": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+                                     }
+                            forKey:@"metricsClient"];
+        }
+
         [_manager POST:_configuration.path
-            parameters:@{
-                         @"userID": [UIDevice currentDevice].identifierForVendor.UUIDString,
-                         @"appID": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"],
-                         @"activities": activities
-                         }
+            parameters:postMessage
               progress:nil
               success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+#ifdef DEBUG
+                  NSLog(@"[BSGMetrics][%@] Got success response…", [NSThread currentThread]);
+#endif
+
                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                   [self manageSuccessForEvents:events
                                       response:responseObject
                                     statusCode:httpResponse.statusCode];
                   callback(TRUE);
               } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+#ifdef DEBUG
+                  NSLog(@"[BSGMetrics][%@] Got failure response…", [NSThread currentThread]);
+#endif
+
                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                   [self manageErrorsForEvents:events
                                    statusCode:httpResponse.statusCode];
@@ -104,9 +143,13 @@
     [eventsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BSGMetricsEvent *event = (BSGMetricsEvent *)obj;
         event.status = status;
+#ifdef DEBUG
         NSLog(@"[BSGMetrics] DEBUG RetryCount bumped from... %li", (long)event.retryCount);
+#endif
         event.retryCount += 1;
+#ifdef DEBUG
         NSLog(@"[BSGMetrics] DEBUG to... %li", (long)event.retryCount);
+#endif
         [event save];
     }];
 }

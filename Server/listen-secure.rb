@@ -18,7 +18,7 @@ webrick_options = {
 }
 
 class MyServer  < Sinatra::Base
-    post '/' do
+    post '/metrics/activities' do
       puts "* Params: "
       puts params
       puts request.body.read
@@ -27,7 +27,7 @@ class MyServer  < Sinatra::Base
       { :key1 => 'value1', :key2 => 'value2' }.to_json
     end
 
-    get '/' do
+    get '/metrics/activities' do
       content_type :text
       "BSGMetrics up"
     end

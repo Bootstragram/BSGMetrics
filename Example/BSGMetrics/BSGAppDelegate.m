@@ -15,8 +15,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BSGMetricsConfiguration *configuration = [[BSGMetricsConfiguration alloc] init];
-    configuration.baseURL = @"https://dev.bootstragram.com:4567";
-    configuration.path = @"/";
+    configuration.baseURL = @"https://dev.bootstragram.com:4567/metrics";
+    configuration.path = @"activities";
     configuration.limit = 10;
     configuration.frequency = 5;
     configuration.maxRetries = 5;
@@ -67,11 +67,7 @@
 
 
 - (void)collectMetricsEvent:(NSNotification *)notification {
-    if ([BSGMetricsEvent eventWithUserInfo:notification.userInfo]) {
-        NSLog(@"[Delegate] Event registered");
-    } else {
-        NSLog(@"[Delegate] Event couldn't be registered");
-    }
+    [_metrics eventWithUserInfo:notification.userInfo];
 }
 
 

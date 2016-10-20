@@ -9,13 +9,25 @@
 #import "BSGMetrics.h"
 #import "BSGMetricsService.h"
 #import "FCModel.h"
+#import "BSGMetricsSendOperation.h"
+
 
 @interface BSGMetrics ()
 
+@property(strong, nonatomic) NSTimer *launcherTimer;
+@property(strong, nonatomic) NSOperationQueue *networkOperationQueue;
+@property(strong, nonatomic) NSOperationQueue *databaseOperationQueue;
 @property(strong, nonatomic) BSGMetricsService *service;
 @property(strong, nonatomic) BSGMetricsConfiguration *configuration;
 @property(copy, nonatomic) void(^sendCompletion) (BOOL);
-@property(nonatomic) BOOL started;
+@property(readonly) NSUInteger maxNumberOfOperationsInQueue;
+
+@end
+
+
+@interface BSGMetricsEvent (BSGMetrics)
+
++ (BSGMetricsEvent *)eventWithUserInfo:(NSDictionary *)userInfo;
 
 @end
 
@@ -57,77 +69,104 @@
             *schemaVersion = 1;
         }
 
-        // If you wanted to change the schema in a later app version, you'd add something like this here:
-        /*
-         if (*schemaVersion < 2) {
-         if (! [db executeUpdate:@"ALTER TABLE Person ADD COLUMN title TEXT NOT NULL DEFAULT ''"]) failedAt(3);
-         *schemaVersion = 2;
-         //if (! [db executeUpdate:@"CREATE INDEX IF NOT EXISTS status ON Person (name);"]) failedAt(2);
-         }
+        if (*schemaVersion < 2) {
+            if (! [db executeUpdate:@"ALTER TABLE BSGMetricsEvent ADD COLUMN uuid TEXT NOT NULL DEFAULT ''"]) failedAt(3);
+            *schemaVersion = 2;
+        }
 
+        /*
+         // If you wanted to change the schema in a later app version, you'd add something like this here:
          // And so on...
          if (*schemaVersion < 3) {
-         if (! [db executeUpdate:@"CREATE TABLE..."]) failedAt(4);
+             //if (! [db executeUpdate:@"CREATE INDEX IF NOT EXISTS status ON Person (name);"]) failedAt(2);
+             if (! [db executeUpdate:@"CREATE TABLE..."]) failedAt(4);
          *schemaVersion = 3;
          }
 
          */
 
+#ifdef DEBUG
         NSLog(@"[BSGMetrics] DEBUG Committing with version %d", (* schemaVersion));
+#endif
 
         [db commit];
     }];
 
-    BSGMetrics *metrics = [[BSGMetrics alloc] init];
-    metrics.configuration = configuration;
-    metrics.service = [[BSGMetricsService alloc] initWithConfig:metrics.configuration];
-    metrics.started = NO;
+    return [[BSGMetrics alloc] initWithConfiguration:configuration];
+}
 
-    return metrics;
+
+- (id)initWithConfiguration:(BSGMetricsConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.configuration = configuration;
+        self.service = [[BSGMetricsService alloc] initWithConfig:configuration];
+
+        self.networkOperationQueue = [[NSOperationQueue alloc] init];
+        self.networkOperationQueue.maxConcurrentOperationCount = 1;
+        self.networkOperationQueue.qualityOfService = NSOperationQualityOfServiceBackground;
+        self.networkOperationQueue.suspended = YES;
+
+        self.databaseOperationQueue = [[NSOperationQueue alloc] init];
+        self.databaseOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
+
+        self.launcherTimer = [NSTimer scheduledTimerWithTimeInterval:configuration.frequency
+                                                              target:self
+                                                            selector:@selector(addSendOperationIfOperatingSmoothly)
+                                                            userInfo:nil
+                                                             repeats:YES];
+        _maxNumberOfOperationsInQueue = 2;
+    }
+    return self;
 }
 
 
 - (void)startSendingWithCompletion:(void (^)(BOOL success))callback {
-    if (_started) {
-        NSLog(@"[BSGMetrics] WARN Already started");
-        return;
-    } else {
-        NSLog(@"[BSGMetrics] INFO Start sending");
-        _started = YES;
-        [self privateStartSendingWithCompletion:callback];
+    @synchronized (self) {
+        if (self.networkOperationQueue.isSuspended) {
+            self.sendCompletion = callback;
+            self.networkOperationQueue.suspended = NO;
+        } else {
+            NSLog(@"[BSGMetrics] WARN Already started");
+        }
     }
 }
 
 
 - (void)stopSending {
-    NSLog(@"[BSGMetrics] INFO Stop sending...");
-    _started = NO;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    @synchronized (self) {
+        NSLog(@"[BSGMetrics] INFO Suspending operations...");
+        self.networkOperationQueue.suspended = YES;
+        [self.networkOperationQueue cancelAllOperations];
+        [self.networkOperationQueue waitUntilAllOperationsAreFinished];
+        NSLog(@"[BSGMetrics] INFO Operations were suspended...");
+    }
 }
 
 
 # pragma mark - Private stuff
 
 
-- (void)privateStartSendingWithCompletion:(void (^)(BOOL success))callback {
-    if (_started) {
-        NSLog(@"[BSGMetrics] DEBUG Internal start sending...");
-        _sendCompletion = callback;
-
-        [_service postEventsWithLimit:_configuration.limit completion:^(BOOL success) {
-            NSLog(@"[BSGMetrics] DEBUG Pruning...");
-            [self pruneMessagesOK];
-
-            if (_started) {
-                NSLog(@"[BSGMetrics] DEBUG Rescheduling in %f.", _configuration.frequency);
-                [self performSelector:@selector(privateStartSendingWithCompletion:)
-                           withObject:callback
-                           afterDelay:_configuration.frequency];
-            }
-
-            _sendCompletion(success);
-        }];
+- (void)addSendOperationIfOperatingSmoothly {
+    if (self.networkOperationQueue.isSuspended) {
+        NSLog(@"[BSGMetrics] DEBUG Not adding operation (the queue ie suspended)");
+        return;
     }
+
+    if (self.networkOperationQueue.operationCount > self.maxNumberOfOperationsInQueue) {
+        NSLog(@"[BSGMetrics] DEBUG Not adding operation (the queue is too busy)");
+        return;
+    }
+
+    BSGMetricsSendOperation *newOperation = [[BSGMetricsSendOperation alloc] initWithService:self.service
+                                                                               andCompletion:self.sendCompletion];
+    [self.networkOperationQueue addOperation:newOperation];
+
+    NSBlockOperation* theOp = [NSBlockOperation blockOperationWithBlock: ^{
+        [self pruneMessagesOK];
+    }];
+
+    [self.networkOperationQueue addOperation:theOp];
 }
 
 
@@ -143,6 +182,43 @@
 
 - (NSUInteger)countMessagesWithTooManyErrors {
     return [BSGMetricsEvent numberOfInstancesWhere:@"status = ? AND retryCount >= ?", [NSNumber numberWithInteger:BSGMetricsEventStatusSentWithError], [NSNumber numberWithInteger:_configuration.maxRetries]];
+}
+
+
+- (void)eventWithUserInfo:(NSDictionary *)userInfo {
+    NSBlockOperation* theOp = [NSBlockOperation blockOperationWithBlock: ^{
+        BSGMetricsEvent *newEvent = [BSGMetricsEvent eventWithUserInfo:userInfo];
+        FCModelSaveResult saveResult = [newEvent save];
+
+        switch (saveResult) {
+            case FCModelSaveFailed: {
+                NSLog(@"[BSGMetrics] ERROR FCModelSaveFailed");
+                return;
+            }
+            case FCModelSaveRefused: {
+                NSLog(@"[BSGMetrics] ERROR FCModelSaveRefused");
+                return;
+            }
+            case FCModelSaveNoChanges: {
+#ifdef DEBUG
+                NSLog(@"[BSGMetrics] DEBUG FCModelSaveNoChanges");
+#endif
+                return;
+            }
+            case FCModelSaveSucceeded: {
+#ifdef DEBUG
+                NSLog(@"[BSGMetrics] DEBUG FCModelSaveSucceeded");
+#endif
+                return;
+            }
+            default: {
+                NSLog(@"[BSGMetrics] WARN Unknown return status");
+                return;
+            }
+        }
+    }];
+
+    [self.databaseOperationQueue addOperation:theOp];
 }
 
 

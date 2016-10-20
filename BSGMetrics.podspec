@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BSGMetrics'
-  s.version          = '0.1.4'
+  s.version          = '0.1.5'
   s.summary          = 'Send simple JSON for metrics collection.'
 
 # This description is used to generate tags and improve search results.
@@ -36,10 +36,13 @@ A client implementation for Bootstragram's BSGMetrics analytics product.
   #   'BSGMetrics' => ['BSGMetrics/Assets/*.png']
   # }
 
+  # BSGMetricsService should be private but heh...
+  # cf. http://stackoverflow.com/questions/39965703/why-does-travis-not-find-my-header-file-when-the-same-instruction-runs-fine-on
   s.public_header_files = [
     'BSGMetrics/Classes/BSGMetrics.h',
     'BSGMetrics/Classes/BSGMetricsConfiguration.h',
-    'BSGMetrics/Classes/BSGMetricsEvent.h'
+    'BSGMetrics/Classes/BSGMetricsEvent.h',
+    'BSGMetrics/Classes/BSGMetricsService.h'
   ]
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'AFNetworking'
