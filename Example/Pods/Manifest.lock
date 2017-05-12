@@ -17,7 +17,7 @@ PODS:
   - BSGMetrics (0.1.5):
     - AFNetworking
     - FCModel
-  - BSGUtilities (0.4.1):
+  - BSGUtilities (0.4.2):
     - MMMarkdown (~> 0.3)
   - Expecta (1.0.5)
   - FCModel (0.9.0):
@@ -25,8 +25,8 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - MMMarkdown (0.5.4)
-  - Specta (1.0.5)
+  - MMMarkdown (0.5.5)
+  - Specta (1.0.6)
 
 DEPENDENCIES:
   - BSGMetrics (from `../`)
@@ -42,18 +42,18 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BSGUtilities:
-    :commit: ee3b40164bc505452daf22505c73f058fe3c4b8a
+    :commit: 7d99bef40a424017dbb3cd59afe64195d8f97183
     :git: https://github.com/Bootstragram/BSGUtilities.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   BSGMetrics: 37b1f49a2585e2f91ac9f1a6f74f0c95626b85bb
-  BSGUtilities: 09b3a1877a3de110694db88469ccc0e25b048100
+  BSGUtilities: c6ba07ead1ae0ea8a694692155b24a55519082c9
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   FCModel: 04bb289914e67f2275cb17fda869131a3529c1a5
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  MMMarkdown: 754f9154136d224178f51f2b2ba67a66a89d96ea
-  Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
+  MMMarkdown: 1af97166ce0f6d6e0cb05695665492195d27c3f1
+  Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
 
 PODFILE CHECKSUM: 15fb4c4f23b21638091eb5f53da5862b3752f377
 

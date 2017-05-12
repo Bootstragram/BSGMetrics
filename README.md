@@ -1,9 +1,15 @@
+<h3 align="center">
+  <img src="Example/BSGMetrics/Images.xcassets/AppIcon.appiconset/Icon-60%402x.png" alt="BSGMetrics Logo" />
+</h3>
+
 # BSGMetrics
 
 [![CI Status](http://img.shields.io/travis/Bootstragram/BSGMetrics.svg?style=flat)](https://travis-ci.org/Bootstragram/BSGMetrics)
 [![Version](https://img.shields.io/cocoapods/v/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
 [![License](https://img.shields.io/cocoapods/l/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
 [![Platform](https://img.shields.io/cocoapods/p/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
+
+
 
 BSGMetrics is the iOS client for Bootstragram's analytics services.
 

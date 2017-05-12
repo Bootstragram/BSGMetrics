@@ -21,6 +21,12 @@
 
 
 /**
+ *  **Don't use this init method.**
+ */
+- (instancetype)init NS_UNAVAILABLE;
+
+
+/**
  *  Initializer.
  *
  *  @param fetchedResultsController the `NSFetchedResultsController` instance to use
@@ -30,10 +36,10 @@
  *
  *  @return a newly created instance
  */
-- (id)initWithFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController
-                        cellIdentifier:(NSString *)aCellIdentifier
-                    configureCellBlock:(BSGTableViewCellConfigureBlock)aConfigureCellBlock
-                             tableView:(UITableView *)tableView;
+- (instancetype)initWithFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController
+                                  cellIdentifier:(NSString *)aCellIdentifier
+                              configureCellBlock:(BSGTableViewCellConfigureBlock)aConfigureCellBlock
+                                       tableView:(UITableView *)tableView;
 
 /**
  *  Returns the item at the given indexPath.
