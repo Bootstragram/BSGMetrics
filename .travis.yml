@@ -9,6 +9,7 @@ podfile: Example/Podfile
 
 before_install:
   - bundle install
+  - bundle exec pod repo update
   - bundle exec pod install --project-directory=Example
 
 script:
