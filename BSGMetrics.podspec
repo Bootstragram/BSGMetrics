@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BSGMetrics'
-  s.version          = '0.1.5'
+  s.version          = '0.2.0'
   s.summary          = 'Send simple JSON for metrics collection.'
 
 # This description is used to generate tags and improve search results.

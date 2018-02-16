@@ -2,8 +2,8 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-ruby "2.2.5"
+ruby "2.3.1"
 
-gem "cocoapods", "1.1.0.rc.2"
+gem "cocoapods"
 gem "xcpretty"
 gem "sinatra"

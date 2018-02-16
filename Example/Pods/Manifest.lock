@@ -1,60 +1,53 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
-  - AFNetworking/NSURLSession (3.1.0):
+  - AFNetworking (3.2.0):
+    - AFNetworking/NSURLSession (= 3.2.0)
+    - AFNetworking/Reachability (= 3.2.0)
+    - AFNetworking/Security (= 3.2.0)
+    - AFNetworking/Serialization (= 3.2.0)
+    - AFNetworking/UIKit (= 3.2.0)
+  - AFNetworking/NSURLSession (3.2.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
+  - AFNetworking/Reachability (3.2.0)
+  - AFNetworking/Security (3.2.0)
+  - AFNetworking/Serialization (3.2.0)
+  - AFNetworking/UIKit (3.2.0):
     - AFNetworking/NSURLSession
-  - BSGMetrics (0.1.5):
+  - BSGMetrics (0.2.0):
     - AFNetworking
     - FCModel
-  - BSGUtilities (0.4.1):
+  - BSGUtilities (0.5.0):
     - MMMarkdown (~> 0.3)
-  - Expecta (1.0.5)
+  - Expecta (1.0.6)
   - FCModel (0.9.0):
     - FMDB (~> 2.1)
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
-  - MMMarkdown (0.5.4)
-  - Specta (1.0.5)
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
+  - MMMarkdown (0.5.5)
+  - Specta (1.0.7)
 
 DEPENDENCIES:
   - BSGMetrics (from `../`)
-  - BSGUtilities (from `https://github.com/Bootstragram/BSGUtilities.git`)
+  - BSGUtilities
   - Expecta
   - Specta
 
 EXTERNAL SOURCES:
   BSGMetrics:
-    :path: "../"
-  BSGUtilities:
-    :git: https://github.com/Bootstragram/BSGUtilities.git
-
-CHECKOUT OPTIONS:
-  BSGUtilities:
-    :commit: ee3b40164bc505452daf22505c73f058fe3c4b8a
-    :git: https://github.com/Bootstragram/BSGUtilities.git
+    :path: ../
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  BSGMetrics: 37b1f49a2585e2f91ac9f1a6f74f0c95626b85bb
-  BSGUtilities: 09b3a1877a3de110694db88469ccc0e25b048100
-  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  AFNetworking: 8ac6017b94ea105479f7776e5288e48ae9c59bb4
+  BSGMetrics: d685ad94deee55dbc1cda1c411bd6529bb72dec1
+  BSGUtilities: deb6b2e0b38ad8492137eca775c68dafb48e5660
+  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   FCModel: 04bb289914e67f2275cb17fda869131a3529c1a5
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  MMMarkdown: 754f9154136d224178f51f2b2ba67a66a89d96ea
-  Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  MMMarkdown: 1af97166ce0f6d6e0cb05695665492195d27c3f1
+  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
-PODFILE CHECKSUM: 15fb4c4f23b21638091eb5f53da5862b3752f377
+PODFILE CHECKSUM: 60daf20c6ab2285c9df7094e090d18a7ce4f13a3
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.4.0
