@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.2.0)
   - AFNetworking/UIKit (3.2.0):
     - AFNetworking/NSURLSession
-  - BSGMetrics (0.1.5):
+  - BSGMetrics (0.2.0):
     - AFNetworking
     - FCModel
   - BSGUtilities (0.5.0):
@@ -40,7 +40,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 8ac6017b94ea105479f7776e5288e48ae9c59bb4
-  BSGMetrics: 63d28f85d87a11f43be5095d2ecdcdeab12de4a2
+  BSGMetrics: d685ad94deee55dbc1cda1c411bd6529bb72dec1
   BSGUtilities: deb6b2e0b38ad8492137eca775c68dafb48e5660
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   FCModel: 04bb289914e67f2275cb17fda869131a3529c1a5
