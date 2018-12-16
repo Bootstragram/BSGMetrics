@@ -9,17 +9,18 @@
 [![License](https://img.shields.io/cocoapods/l/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
 [![Platform](https://img.shields.io/cocoapods/p/BSGMetrics.svg?style=flat)](http://cocoapods.org/pods/BSGMetrics)
 
-
-
 BSGMetrics is the iOS client for Bootstragram's analytics services.
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+To run the example project, clone the repo and run:
+
+    make install
+    make open
 
 ## Running the demo Server
 
-    ruby Server/listen-secure.rb
+    make start-services
 
 ## Requirements
 
