@@ -62,7 +62,7 @@
     }
 
     [self.service postEventsWithCompletion:^(BOOL success) {
-        _sendCompletion(success);
+        self->_sendCompletion(success);
         [self completeOperation];
     }];
 }

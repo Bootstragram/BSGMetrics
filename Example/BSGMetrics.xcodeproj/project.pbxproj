@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00943ACD23BB52EA0052F5AE /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00943ACC23BB52EA0052F5AE /* Launch.storyboard */; };
 		00B5847E1D10561D00679302 /* BSGMetricsEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B5847D1D10561D00679302 /* BSGMetricsEventTests.m */; };
 		1B9C42E55A55B99840FC7E8C /* Pods_BSGMetrics_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD9D93689B1E3A3C14B9992 /* Pods_BSGMetrics_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00943ACC23BB52EA0052F5AE /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		00B5847D1D10561D00679302 /* BSGMetricsEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSGMetricsEventTests.m; sourceTree = "<group>"; };
 		16D29CCF49AEA775A7B403D4 /* Pods_BSGMetrics_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSGMetrics_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E600D2918201213C1D3E66 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 		6BD9D93689B1E3A3C14B9992 /* Pods_BSGMetrics_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSGMetrics_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8A5E3038E983097159FD3E4C /* Pods-BSGMetrics_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSGMetrics_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		BFB33CE64507B568F33D3BBE /* BSGMetrics.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BSGMetrics.podspec; path = ../BSGMetrics.podspec; sourceTree = "<group>"; };
+		BFB33CE64507B568F33D3BBE /* BSGMetrics.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BSGMetrics.podspec; path = ../BSGMetrics.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E23C5575F691260775A03A8E /* Pods-BSGMetrics_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSGMetrics_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EAB07ACC91FE2634D2AC801F /* Pods-BSGMetrics_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSGMetrics_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +136,7 @@
 			children = (
 				6003F59C195388D20070C39A /* BSGAppDelegate.h */,
 				6003F59D195388D20070C39A /* BSGAppDelegate.m */,
+				00943ACC23BB52EA0052F5AE /* Launch.storyboard */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* BSGViewController.h */,
 				6003F5A6195388D20070C39A /* BSGViewController.m */,
@@ -245,11 +248,11 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = BSG;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Mickaël Floc’hlay";
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = 9L264PA4TX;
+						DevelopmentTeam = 7HX93AP7WL;
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
@@ -258,7 +261,7 @@
 			};
 			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "BSGMetrics" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -283,6 +286,7 @@
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				00943ACD23BB52EA0052F5AE /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +307,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Expecta/Expecta.framework",
 				"${BUILT_PRODUCTS_DIR}/Specta/Specta.framework",
 			);
@@ -314,7 +318,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8AC9FA38F04BC96DBC5C9311 /* [CP] Embed Pods Frameworks */ = {
@@ -323,7 +327,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/BSGMetrics/BSGMetrics.framework",
 				"${BUILT_PRODUCTS_DIR}/BSGUtilities/BSGUtilities.framework",
@@ -342,7 +346,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9FF4CB4BEE62526C71183B43 /* [CP] Check Pods Manifest.lock */ = {
@@ -437,6 +441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -479,7 +484,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -490,6 +495,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -525,7 +531,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -537,8 +543,7 @@
 			baseConfigurationReference = 8A5E3038E983097159FD3E4C /* Pods-BSGMetrics_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 9L264PA4TX;
+				DEVELOPMENT_TEAM = 7HX93AP7WL;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BSGMetrics/BSGMetrics-Prefix.pch";
 				INFOPLIST_FILE = "BSGMetrics/BSGMetrics-Info.plist";
@@ -554,8 +559,7 @@
 			baseConfigurationReference = E23C5575F691260775A03A8E /* Pods-BSGMetrics_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 9L264PA4TX;
+				DEVELOPMENT_TEAM = 7HX93AP7WL;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BSGMetrics/BSGMetrics-Prefix.pch";
 				INFOPLIST_FILE = "BSGMetrics/BSGMetrics-Info.plist";
