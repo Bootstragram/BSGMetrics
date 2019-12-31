@@ -304,7 +304,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Expecta/Expecta.framework",
 				"${BUILT_PRODUCTS_DIR}/Specta/Specta.framework",
 			);
@@ -315,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8AC9FA38F04BC96DBC5C9311 /* [CP] Embed Pods Frameworks */ = {
@@ -324,7 +324,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/BSGMetrics/BSGMetrics.framework",
 				"${BUILT_PRODUCTS_DIR}/BSGUtilities/BSGUtilities.framework",
@@ -343,7 +343,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9FF4CB4BEE62526C71183B43 /* [CP] Check Pods Manifest.lock */ = {
