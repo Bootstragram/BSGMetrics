@@ -64,7 +64,7 @@
 		6BD9D93689B1E3A3C14B9992 /* Pods_BSGMetrics_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSGMetrics_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8A5E3038E983097159FD3E4C /* Pods-BSGMetrics_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSGMetrics_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		BFB33CE64507B568F33D3BBE /* BSGMetrics.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BSGMetrics.podspec; path = ../BSGMetrics.podspec; sourceTree = "<group>"; };
+		BFB33CE64507B568F33D3BBE /* BSGMetrics.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BSGMetrics.podspec; path = ../BSGMetrics.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E23C5575F691260775A03A8E /* Pods-BSGMetrics_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSGMetrics_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-BSGMetrics_Example/Pods-BSGMetrics_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EAB07ACC91FE2634D2AC801F /* Pods-BSGMetrics_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSGMetrics_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BSGMetrics_Tests/Pods-BSGMetrics_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -249,7 +249,7 @@
 				ORGANIZATIONNAME = "Mickaël Floc’hlay";
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = 9L264PA4TX;
+						DevelopmentTeam = 7HX93AP7WL;
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
@@ -261,6 +261,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -538,7 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 9L264PA4TX;
+				DEVELOPMENT_TEAM = 7HX93AP7WL;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BSGMetrics/BSGMetrics-Prefix.pch";
 				INFOPLIST_FILE = "BSGMetrics/BSGMetrics-Info.plist";
@@ -555,7 +556,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 9L264PA4TX;
+				DEVELOPMENT_TEAM = 7HX93AP7WL;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BSGMetrics/BSGMetrics-Prefix.pch";
 				INFOPLIST_FILE = "BSGMetrics/BSGMetrics-Info.plist";

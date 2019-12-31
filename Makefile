@@ -20,6 +20,15 @@ upgrade:
 	bundle exec pod repo update
 	bundle exec pod update --project-directory=Example
 
+test:
+	# This one fails due to http://stackoverflow.com/questions/37922146/xctests-failing-on-physical-device-canceling-tests-due-to-timeout/39896706#39896706
+	# set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' test | xcpretty
+	set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6s,OS=12.1' test | xcpretty
+	set -o pipefail && xcodebuild -workspace Example/BSGMetrics.xcworkspace -scheme BSGMetrics-Example -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=12.1' test | xcpretty
+
+lint:
+	bundle exec pod lib lint --allow-warnings
+
 # install with `brew install appledoc`
 doc:
 	appledoc \
