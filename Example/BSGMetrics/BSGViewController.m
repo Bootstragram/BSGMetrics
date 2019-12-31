@@ -24,19 +24,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 44.0)];
-
+    
     UIBarButtonItem *startButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(startSending:)];
     UIBarButtonItem *stopButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(stopSending:)];
     UIBarButtonItem *trashButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashItems:)];
-
+    
     toolbar.items = @[ startButtonItem, stopButtonItem, trashButtonItem ];
-
+    
     self.tableView.tableHeaderView = toolbar;
-
+    
     self.appDelegate = (BSGAppDelegate *)[[UIApplication sharedApplication] delegate];
-
+    
     [self reload];
 }
 
@@ -70,12 +70,12 @@
     NSArray *allEvents = [BSGMetricsEvent allInstances];
     _dataSource = [[BSGArrayDataSource alloc] initWithItems:allEvents
                                              cellIdentifier:@"BSGEventCell" configureCellBlock:^(id cell, id item) {
-                                                 UITableViewCell *myCell = (UITableViewCell *)cell;
-                                                 BSGMetricsEvent *event = (BSGMetricsEvent *)item;
-
-                                                 myCell.textLabel.text = [_dateFormatter stringFromDate:event.createdAt];
-                                                 myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %ld - Retry: %ld", (long)event.status, (long)event.retryCount];
-                                             }];
+        UITableViewCell *myCell = (UITableViewCell *)cell;
+        BSGMetricsEvent *event = (BSGMetricsEvent *)item;
+        
+        myCell.textLabel.text = [self->_dateFormatter stringFromDate:event.createdAt];
+        myCell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %ld - Retry: %ld", (long)event.status, (long)event.retryCount];
+    }];
     self.tableView.dataSource = _dataSource;
     [self.tableView reloadData];
 }
