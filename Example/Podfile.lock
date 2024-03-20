@@ -15,49 +15,53 @@ PODS:
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
   - BSGMetrics (0.2.0):
-    - AFNetworking
+    - AFNetworking (~> 3.2)
     - FCModel
-  - BSGUtilities (0.5.0):
-    - MMMarkdown (~> 0.3)
+    - FMDB (= 2.7.5)
+  - BSGUtilities (0.5.0)
   - Expecta (1.0.6)
   - FCModel (0.9.0):
     - FMDB (~> 2.1)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - MMMarkdown (0.5.5)
-  - Specta (1.0.7)
+  - Specta (2.0.0)
 
 DEPENDENCIES:
   - BSGMetrics (from `../`)
-  - BSGUtilities
+  - BSGUtilities (from `https://github.com/dirtyhenry/BSGUtilities`, branch `main`)
   - Expecta
   - Specta
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
-    - BSGUtilities
     - Expecta
     - FCModel
     - FMDB
-    - MMMarkdown
     - Specta
 
 EXTERNAL SOURCES:
   BSGMetrics:
     :path: "../"
+  BSGUtilities:
+    :branch: main
+    :git: https://github.com/dirtyhenry/BSGUtilities
+
+CHECKOUT OPTIONS:
+  BSGUtilities:
+    :commit: 5719a8ecc921144c5471c8a7a7999b351eae40e9
+    :git: https://github.com/dirtyhenry/BSGUtilities
 
 SPEC CHECKSUMS:
-  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  BSGMetrics: cbeec2f6c85bc26597295d471d33f076e9c87a28
-  BSGUtilities: deb6b2e0b38ad8492137eca775c68dafb48e5660
+  AFNetworking: cb604b1c2bded0871f5f61f5d53653739e841d6b
+  BSGMetrics: 6bc265f6db9f6eeb16ed0a06aeed0b6da5ee9183
+  BSGUtilities: 279fcea1055440c439d0057ad4ab540a77fc9752
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   FCModel: 04bb289914e67f2275cb17fda869131a3529c1a5
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  MMMarkdown: 1af97166ce0f6d6e0cb05695665492195d27c3f1
-  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
+  Specta: b79d84043684b35ffdc2680df578dc318ec2efc2
 
-PODFILE CHECKSUM: 60daf20c6ab2285c9df7094e090d18a7ce4f13a3
+PODFILE CHECKSUM: ec192910c150c8664c4ea36cd29105270e8e3ac8
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.15.2
