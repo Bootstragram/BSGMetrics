@@ -14,7 +14,6 @@
 #import "BSGEntitiesTableViewController.h"
 #import "BSGManagedObjectDetailTableViewController.h"
 #import "BSGManagedObjectsTableViewController.h"
-#import "BSGFileSystemExplorer.h"
 #import "NSDictionary+BSGJSONUtils.h"
 #import "BSGArrayDataSource.h"
 #import "BSGFetchedResultsControllerDataSource.h"

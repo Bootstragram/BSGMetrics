@@ -14,7 +14,7 @@
  
  Two options to load content:
  
- 1. Set the `raMarkdownContent` property with raw Markdown like `@"## Toto *Italic*`
+ 1. Set the `rawText` property with raw content like `@"## Toto *Italic*`
  2. Set the `urlString` property with a URL string like `http://www.google.fr`
 
  TODO: eventually, this class should be moved in a private POD.
@@ -23,16 +23,16 @@
 @interface BSGWebViewController : UIViewController<UIWebViewDelegate>
 
 /**
- *  Raw Markdown content. 
+ *  Raw text content.
  *
  *  If this property is set, then `urlString` will be ignored.
  */
-@property (copy, nonatomic) NSString *rawMarkdownContent;
+@property (copy, nonatomic) NSString *rawText;
 
 /**
  *  A URL string to load in the web view.
  *
- *  This property will be ignored unless `rawMarkdownContent` is `nil`.
+ *  This property will be ignored unless `rawText` is `nil`.
  */
 @property (copy, nonatomic) NSString *urlString;
 

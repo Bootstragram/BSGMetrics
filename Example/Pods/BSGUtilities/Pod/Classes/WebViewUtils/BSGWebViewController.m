@@ -7,7 +7,6 @@
 //
 
 #import "BSGWebViewController.h"
-#import <MMMarkdown/MMMarkdown.h>
 #import "BSGWebViewDelegate.h"
 
 @interface BSGWebViewController () <UIAlertViewDelegate>
@@ -52,39 +51,42 @@
 
 - (void)refreshContent {
     // Load the content of the view
-    if (self.rawMarkdownContent) {
+    if (self.rawText) {
         NSError *error = nil;
         NSURL *bundleBaseURL = [[NSBundle mainBundle] resourceURL];
-        NSString *htmlTemplatePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-        if (!htmlTemplatePath) {
-            NSLog(@"HTML Error: couldn't find HTML template");
-        }
-        NSString *htmlTemplate = [NSString stringWithContentsOfFile:htmlTemplatePath encoding:NSUTF8StringEncoding error:&error];
-        if (htmlTemplate) {
-            [self.webView loadHTMLString:[NSString stringWithFormat:htmlTemplate, [MMMarkdown HTMLStringWithMarkdown:self.rawMarkdownContent error:&error]] baseURL:bundleBaseURL];
-            if (error) {
-                NSLog(@"MMMarkdown Error: %@", error);
-            }
-        } else {
-            if (error) {
-                NSLog(@"Pod Error: %@", error);
-            }
+        
+        NSString *htmlTemplate = @"<!doctype html>\n"
+            "<html class=\"no-js\" lang=\"\">\n"
+            "<head>\n"
+            "  <meta charset=\"utf-8\">\n"
+            "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"
+            "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+            "</head>\n"
+            "<body><pre>\n"
+            "  %@\n" // This is a placeholder for dynamic content
+            "</pre></body>\n"
+            "</html>";
+
+        [self.webView loadHTMLString:[NSString stringWithFormat:htmlTemplate, self.rawText]
+                                baseURL:bundleBaseURL];
+        if (error) {
+            NSLog(@"MMMarkdown Error: %@", error);
         }
     } else if (self.urlString) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     } else {
-        NSLog(@"ERROR: at least urlString or rawMarkdownContent must be set");
+        NSLog(@"ERROR: at least urlString or rawText must be set");
     }
 }
 
-- (void)setRawMarkdownContent:(NSString *)rawMarkdownContent {
-    _rawMarkdownContent = rawMarkdownContent;
+- (void)setRawText:(NSString *)rawText {
+    _rawText = rawText;
     _urlString = nil;
     [self refreshContent];
 }
 
 - (void)setUrlString:(NSString *)urlString {
-    _rawMarkdownContent = nil;
+    _rawText = nil;
     _urlString = urlString;
     [self refreshContent];
 }
@@ -124,8 +126,7 @@
 }
 
 
-- (void)alertView:(UIAlertView *)alertView
-didDismissWithButtonIndex:(NSInteger)buttonIndex {
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     [self dismiss:self];
 }
 

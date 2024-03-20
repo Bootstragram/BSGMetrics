@@ -2,8 +2,9 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-ruby "2.6.3"
+ruby "3.0.2"
 
 gem "cocoapods"
 gem "xcpretty"
 gem "sinatra"
+gem "rackup"

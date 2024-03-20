@@ -13,7 +13,7 @@ open:
 	open Example/BSGMetrics.xcworkspace
 
 start-services:
-	ruby Server/listen-secure.rb
+	bundle exec ruby Server/listen.rb
 
 upgrade:
 	bundle update

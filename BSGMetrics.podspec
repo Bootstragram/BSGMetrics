@@ -24,11 +24,10 @@ A client implementation for Bootstragram's BSGMetrics analytics product.
   s.homepage         = 'https://github.com/Bootstragram/BSGMetrics'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Bootstragram' => 'contact@bootstragram.com' }
+  s.author           = { 'Mick F' => 'contact@mickf.net' }
   s.source           = { :git => 'https://github.com/Bootstragram/BSGMetrics.git', :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/bootstragram'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'BSGMetrics/Classes/**/*'
 
@@ -45,6 +44,7 @@ A client implementation for Bootstragram's BSGMetrics analytics product.
     'BSGMetrics/Classes/BSGMetricsService.h'
   ]
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'AFNetworking'
+  s.dependency 'AFNetworking', '~> 3.2'
   s.dependency 'FCModel'
+  s.dependency 'FMDB', '2.7.5'
 end

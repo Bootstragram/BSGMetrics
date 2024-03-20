@@ -1,7 +1,4 @@
 require 'sinatra/base'
-require 'webrick'
-require 'webrick/https'
-require 'openssl'
 require 'json'
 
 CERT_PATH = './'
@@ -11,7 +8,7 @@ webrick_options = {
   :Port => 4567
 }
 
-class MyServer  < Sinatra::Base
+class MyServer < Sinatra::Base
     post '/metrics/activities' do
       puts "* Params: "
       puts params
@@ -27,4 +24,5 @@ class MyServer  < Sinatra::Base
     end
 end
 
-Rack::Handler::WEBrick.run MyServer, webrick_options
+# Run the Sinatra application using WEBrick
+MyServer.run! webrick_options
