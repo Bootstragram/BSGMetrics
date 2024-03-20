@@ -32,10 +32,6 @@ it, simply add the following line to your Podfile:
 pod "BSGMetrics"
 ```
 
-## Author
-
-Bootstragram, contact@bootstragram.com
-
 ## License
 
 BSGMetrics is available under the MIT license. See the LICENSE file for more info.

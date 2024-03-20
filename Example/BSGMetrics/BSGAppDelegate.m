@@ -15,7 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BSGMetricsConfiguration *configuration = [[BSGMetricsConfiguration alloc] init];
-    configuration.baseURL = @"https://dev.bootstragram.com:4567/metrics";
+    configuration.baseURL = @"http://0.0.0.0:4567/metrics";
     configuration.path = @"activities";
     configuration.limit = 10;
     configuration.frequency = 5;
